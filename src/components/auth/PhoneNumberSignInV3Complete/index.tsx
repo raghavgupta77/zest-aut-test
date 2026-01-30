@@ -28,7 +28,6 @@ import {
   AuthenticationV2ErrorMessages,
 } from "../../../types/contracts";
 import {
-  AUTHENTICATION_SESSION_STORAGE_KEY,
   isValidAuthSessionStorage,
   isEmail,
   isIframe,
@@ -41,6 +40,10 @@ import {
   setSignUpFlag,
   setContactNumber,
   hasRestructuringLoanApplication,
+  removeAuthenticationSession,
+  setAuthenticationSession,
+  getAuthenticationSession,
+  SESSION_STORAGE_KEYS,
 } from "../../../utils/sessionStorage";
 import { focusElementById, scrollToTop } from "../../../utils/autoFocus";
 import "./index.css";
@@ -253,13 +256,10 @@ export const PhoneNumberSignInV3Complete: React.FC<
     }
 
     // Check Finoramic parsing feature
-    const authSessionStorage = sessionStorage.getItem(
-      AUTHENTICATION_SESSION_STORAGE_KEY,
-    );
-    if (authSessionStorage && isValidAuthSessionStorage()) {
+    // Matching Angular: sessionStorage.getItem(AUTHENTICATION_SESSION_STORAGE_KEY)
+    const authSession = getAuthenticationSession();
+    if (authSession && isValidAuthSessionStorage()) {
       try {
-        const authSession: AuthenticationSessionStorageProperties =
-          JSON.parse(authSessionStorage);
         if (applicationService) {
           applicationService
             .getFeatureVersion(
@@ -334,7 +334,8 @@ export const PhoneNumberSignInV3Complete: React.FC<
     setShowLogoutConfirmModal(false);
     setShowEmailOptions(false);
     setShowOtpForm(false);
-    sessionStorage.removeItem(AUTHENTICATION_SESSION_STORAGE_KEY);
+    // Matching Angular: sessionStorage.removeItem(AUTHENTICATION_SESSION_STORAGE_KEY);
+    removeAuthenticationSession();
     navigate("/", { replace: true });
   }, [navigate]);
 
@@ -671,8 +672,11 @@ export const PhoneNumberSignInV3Complete: React.FC<
           }
         }
 
-        // Update session storage
-        sessionStorage.removeItem(AUTHENTICATION_SESSION_STORAGE_KEY);
+        // Update session storage (matching Angular exactly)
+        // Angular: window.sessionStorage.removeItem(AUTHENTICATION_SESSION_STORAGE_KEY);
+        // Angular: window.sessionStorage.setItem('ngx-webstorage|zest-contact', this.authentication.MobileNumber);
+        // Angular: window.sessionStorage.setItem('ngx-webstorage|zest-sign-up', 'true');
+        removeAuthenticationSession();
         setContactNumber(currentAuth.MobileNumber);
         if (isSignup) {
           setSignUpFlag(true);
@@ -702,7 +706,7 @@ export const PhoneNumberSignInV3Complete: React.FC<
             if (hideGmail) {
               setOtherEmail(true);
             }
-            setAuthSessionStorage();
+            setAuthSessionStorageCallback();
 
             // Get Finoramic feature
             if (applicationService) {
@@ -810,7 +814,8 @@ export const PhoneNumberSignInV3Complete: React.FC<
             loaderService?.next({ showLoader: false, loaderTextMessage: "" });
 
             if (showEmailOptions) {
-              sessionStorage.removeItem(AUTHENTICATION_SESSION_STORAGE_KEY);
+              // Matching Angular: sessionStorage.removeItem(AUTHENTICATION_SESSION_STORAGE_KEY);
+              removeAuthenticationSession();
               setShowEmailOptions(false);
               setShowError(false);
               setErrorMessage("");
@@ -986,11 +991,11 @@ export const PhoneNumberSignInV3Complete: React.FC<
         setToken(response);
 
         if (external_id_token2) {
-          sessionStorage.setItem("ngx-webstorage|zest-sign-up", "true");
-          sessionStorage.setItem(
-            "ngx-webstorage|zest-contact",
-            authentication.MobileNumber,
-          );
+          // Matching Angular exactly:
+          // window.sessionStorage.setItem('ngx-webstorage|zest-sign-up', 'true');
+          // window.sessionStorage.setItem('ngx-webstorage|zest-contact', this.authentication.MobileNumber);
+          setSignUpFlag(true);
+          setContactNumber(authentication.MobileNumber);
         }
 
         emitGetToken(response);
@@ -1187,16 +1192,13 @@ export const PhoneNumberSignInV3Complete: React.FC<
     setIsSubmitInProgress(true);
 
     // Handle Finoramic email parsing failure
+    // Matching Angular: sessionStorage.getItem(AUTHENTICATION_SESSION_STORAGE_KEY)
     if (!authentication.MobileNumber) {
       const email = authentication.Email;
       try {
-        const authSessionString = sessionStorage.getItem(
-          AUTHENTICATION_SESSION_STORAGE_KEY,
-        );
-        if (authSessionString) {
-          const authSession: AuthenticationSessionStorageProperties =
-            JSON.parse(authSessionString);
-          setAuthentication(authSession.auth);
+        const storedAuthSession = getAuthenticationSession();
+        if (storedAuthSession) {
+          setAuthentication(storedAuthSession.auth);
         }
       } catch (e) {
         // Error parsing
@@ -1358,20 +1360,17 @@ export const PhoneNumberSignInV3Complete: React.FC<
   );
 
   // Set auth session storage
-  const setAuthSessionStorage = useCallback(
+  // Matching Angular: sessionStorage.setItem(AUTHENTICATION_SESSION_STORAGE_KEY, JSON.stringify(authSessionObject));
+  const setAuthSessionStorageCallback = useCallback(
     (reuseIssuedAt = false) => {
       try {
         let issuedAt = Date.now();
         let auth = authentication;
-        const tokenString = sessionStorage.getItem(
-          AUTHENTICATION_SESSION_STORAGE_KEY,
-        );
+        const existingSession = getAuthenticationSession();
 
-        if (reuseIssuedAt && tokenString) {
-          const token: AuthenticationSessionStorageProperties =
-            JSON.parse(tokenString);
-          issuedAt = token.issuedAt;
-          auth = token.auth;
+        if (reuseIssuedAt && existingSession) {
+          issuedAt = existingSession.issuedAt;
+          auth = existingSession.auth;
         }
 
         const authSessionObject: AuthenticationSessionStorageProperties = {
@@ -1379,10 +1378,7 @@ export const PhoneNumberSignInV3Complete: React.FC<
           waOpted,
           issuedAt,
         };
-        sessionStorage.setItem(
-          AUTHENTICATION_SESSION_STORAGE_KEY,
-          JSON.stringify(authSessionObject),
-        );
+        setAuthenticationSession(authSessionObject);
       } catch (e) {
         console.error("Failed to serialize authentication object");
       }

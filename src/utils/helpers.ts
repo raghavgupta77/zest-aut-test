@@ -28,14 +28,15 @@ export const AUTHENTICATION_SESSION_STORAGE_KEY = 'ngx-webstorage|zest-authentic
 
 /**
  * Check if authentication session storage is valid (within 5 minutes)
+ * Matching Angular: isValidAuthSessionStorage()
  */
 export const isValidAuthSessionStorage = (): boolean => {
-  const authSessionString = sessionStorage.getItem(AUTHENTICATION_SESSION_STORAGE_KEY);
-  if (!authSessionString) {
-    return false;
-  }
-
   try {
+    const authSessionString = sessionStorage.getItem(AUTHENTICATION_SESSION_STORAGE_KEY);
+    if (!authSessionString) {
+      return false;
+    }
+
     const authSession: AuthenticationSessionStorageProperties = JSON.parse(authSessionString);
     return Date.now() - authSession.issuedAt < 60000 * 5;
   } catch (err) {

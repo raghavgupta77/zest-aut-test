@@ -4,6 +4,7 @@
  */
 
 import { getEnvironmentConfig } from '../config/environment';
+import { getCheckoutParams } from '../utils/sessionStorage';
 
 export enum Channel {
   default = 'default',
@@ -179,19 +180,14 @@ export class UserDetails {
     this.CustomerId = envConfig.defaultUuid || '00000000-0000-0000-0000-000000000000';
     this.ApplicationId = applicationId || envConfig.defaultUuid || '00000000-0000-0000-0000-000000000000';
     
-    // Check for checkout params
-    const checkoutParams = sessionStorage.getItem('ngx-webstorage|zest-checkout-params');
-    if (checkoutParams) {
-      try {
-        const params = JSON.parse(checkoutParams);
-        if (params.merchantID) {
-          this.MerchantId = params.merchantID;
-        } else if (params.partnerId) {
-          this.MerchantId = params.partnerId;
-        } else {
-          this.MerchantId = merchantId || envConfig.zestMerchantId || '';
-        }
-      } catch (e) {
+    // Check for checkout params (matching Angular: getCheckoutParams())
+    const checkoutParamsData = getCheckoutParams();
+    if (checkoutParamsData) {
+      if (checkoutParamsData.merchantID) {
+        this.MerchantId = checkoutParamsData.merchantID;
+      } else if (checkoutParamsData.partnerId) {
+        this.MerchantId = checkoutParamsData.partnerId;
+      } else {
         this.MerchantId = merchantId || envConfig.zestMerchantId || '';
       }
     } else {
@@ -234,17 +230,12 @@ export class EventDetails {
     );
     this.platform = isMobile ? 'mWeb' : 'desktopWeb';
     
-    // Check checkout params
-    const checkoutParams = sessionStorage.getItem('ngx-webstorage|zest-checkout-params');
-    if (checkoutParams) {
-      try {
-        const params = JSON.parse(checkoutParams);
-        this.originChannel = params.flowType || Channel.default;
-      } catch (e) {
-        this.originChannel = Channel.default;
-      }
+    // Check checkout params (matching Angular: getCheckoutParams())
+    const checkoutParamsData = getCheckoutParams();
+    if (checkoutParamsData) {
+      this.originChannel = checkoutParamsData.flowType || Channel.default;
     } else {
-      // Check if widget flow
+      // Check if widget flow (matching Angular's checkWidgetFlow)
       const envConfig = (window as any).__ENV__?.[environmentType || ''] || {};
       const partnerUrls = envConfig.partnerCheckoutUrl || [];
       const isWidget = 

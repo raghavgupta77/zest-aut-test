@@ -6,6 +6,7 @@
 
 import { backendService, BackendService } from './backendService';
 import { GlobalParams, UserDetails, EventDetails } from '../types/contracts';
+import { getParams } from '../utils/sessionStorage';
 
 // Window interface is extended in analyticsService.ts
 
@@ -19,9 +20,10 @@ export class TrackingService {
 
   /**
    * Get global params from session storage
+   * Matching Angular: window.sessionStorage.getItem('ngx-webstorage|zest-params');
    */
   getGlobalParamsFromSession(): GlobalParams {
-    const params = window.sessionStorage.getItem('ngx-webstorage|zest-params');
+    const params = getParams();
     return params ? JSON.parse(params) as GlobalParams : new GlobalParams();
   }
 

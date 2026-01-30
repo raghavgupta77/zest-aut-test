@@ -15,11 +15,13 @@ import {
   EventDetails,
   UserDetails
 } from '../../../types/contracts';
+import { isEmail } from '../../../utils/helpers';
 import {
-  AUTHENTICATION_SESSION_STORAGE_KEY,
-  isEmail
-} from '../../../utils/helpers';
-import type { AuthenticationSessionStorageProperties } from '../../../utils/helpers';
+  getAuthenticationSession,
+  removeAuthenticationSession,
+  setContactNumber,
+  setSignUpFlag
+} from '../../../utils/sessionStorage';
 
 export interface FinoramicCallbackProps {
   environment?: string;
@@ -66,11 +68,11 @@ export const FinoramicCallback: React.FC<FinoramicCallbackProps> = ({
   }, [authService]);
 
   // Restore authentication from session storage
+  // Matching Angular: const authentication: AuthenticationSessionStorageProperties = JSON.parse(sessionStorage.getItem(AUTHENTICATION_SESSION_STORAGE_KEY));
   useEffect(() => {
     try {
-      const authSessionString = sessionStorage.getItem(AUTHENTICATION_SESSION_STORAGE_KEY);
-      if (authSessionString) {
-        const authSession: AuthenticationSessionStorageProperties = JSON.parse(authSessionString);
+      const authSession = getAuthenticationSession();
+      if (authSession) {
         setAuthentication(authSession.auth);
         setWaOpted(authSession.waOpted);
       }
@@ -199,10 +201,13 @@ export const FinoramicCallback: React.FC<FinoramicCallbackProps> = ({
         { consent: waOpted }
       );
 
-      // Update session storage
-      sessionStorage.removeItem(AUTHENTICATION_SESSION_STORAGE_KEY);
-      sessionStorage.setItem('ngx-webstorage|zest-contact', authentication.MobileNumber);
-      sessionStorage.setItem('ngx-webstorage|zest-sign-up', 'true');
+      // Update session storage (matching Angular exactly)
+      // Angular: window.sessionStorage.removeItem(AUTHENTICATION_SESSION_STORAGE_KEY);
+      // Angular: window.sessionStorage.setItem('ngx-webstorage|zest-contact', this.authentication.MobileNumber);
+      // Angular: window.sessionStorage.setItem('ngx-webstorage|zest-sign-up', 'true');
+      removeAuthenticationSession();
+      setContactNumber(authentication.MobileNumber);
+      setSignUpFlag(true);
 
       emitGetToken(response);
     } catch (error) {

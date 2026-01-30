@@ -19,10 +19,11 @@ import { LoaderService } from '../../../services/loaderService';
 import { AuthenticationServiceExtended } from '../../../services/authenticationServiceExtended';
 import { ApplicationService } from '../../../services/applicationService';
 import { TrackingService } from '../../../services/trackingService';
+import { checkIfErrorCodeRetured } from '../../../utils/helpers';
 import {
-  AUTHENTICATION_SESSION_STORAGE_KEY,
-  checkIfErrorCodeRetured
-} from '../../../utils/helpers';
+  initializeSessionStorage,
+  SESSION_STORAGE_KEYS
+} from '../../../utils/sessionStorage';
 import { Token, EventDetails, AuthenticationErrorCodes } from '../../../types/contracts';
 import './index.css';
 
@@ -167,8 +168,9 @@ export const RedirectComponent: React.FC<RedirectComponentProps> = ({
     const envConfig = getEnvironmentConfig(environmentType);
     const { finoramicCallback = '/authentication/finoramic-callback' } = envConfig || {};
 
-    // Set session storage
-    sessionStorage.setItem('ngx-webstorage|zest-sign-up', 'false');
+    // Initialize session storage with default values (matching Angular ngOnInit)
+    // Angular: window.sessionStorage.setItem('ngx-webstorage|zest-sign-up', 'false');
+    initializeSessionStorage();
 
     // Setup header and footer
     HeaderService.next(new Header(true, false));
@@ -193,7 +195,8 @@ export const RedirectComponent: React.FC<RedirectComponentProps> = ({
     setupPixelScript(envConfig);
 
     // Check if Finoramic callback
-    if (location.pathname === finoramicCallback && sessionStorage.getItem(AUTHENTICATION_SESSION_STORAGE_KEY)) {
+    // Matching Angular: if (window.location.pathname === finoramicCallback && sessionStorage.getItem(AUTHENTICATION_SESSION_STORAGE_KEY))
+    if (location.pathname === finoramicCallback && sessionStorage.getItem(SESSION_STORAGE_KEYS.AUTHENTICATION)) {
       setShowFinoramicCallback(true);
     } else {
       checkAutoSignupCustomer(authServiceInstance);
