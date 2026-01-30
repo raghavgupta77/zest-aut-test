@@ -1,0 +1,165 @@
+/**
+ * GtModal Styles
+ * Exact match for Angular Groot UI gt-modal.css
+ */
+
+/* CSS Variables - matching groot-ui */
+:root {
+  --background: rgba(0, 0, 0, 0.56);
+  --white: #ffffff;
+  --gray-20: #f0f0f0;
+}
+
+/* Ensure modal uses Inter font */
+.modal-container,
+.modal-container * {
+  font-family: 'Inter';
+}
+
+/* Modal Container - Bottom sheet on mobile */
+.modal-container {
+  width: 100%;
+  height: 100%;
+  background: var(--background);
+  z-index: 999;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  opacity: 0;
+  visibility: hidden;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+  transition: all 0.3s;
+  align-items: center;
+}
+
+/* Swipe indicator bar at top */
+.modal-container .swipe-indicator {
+  width: 4rem;
+  left: 50%;
+  top: 0.625rem;
+  margin-bottom: 0.25rem;
+  height: 0.1875rem;
+  border-radius: 6.25rem;
+  background: var(--white);
+}
+
+/* Modal content - slides up from bottom */
+.modal-container .modal-content {
+  width: 100%;
+  max-height: 90%;
+  min-height: fit-content;
+  box-sizing: border-box;
+  border-radius: 1rem 1rem 0 0;
+  background: var(--white);
+  overflow: auto;
+  transition: all 0.3s;
+  transform: translateY(100%);
+  position: relative;
+}
+
+/* Close icon */
+.modal-container .modal-content .closeIcon {
+  display: none;
+  cursor: pointer;
+  position: absolute;
+  right: 1.125rem;
+  top: 1.125rem;
+}
+
+/* Show close icon for OTP modal (primary appearance with otp-modal class) - visible on all screen sizes */
+.modal-container.otp-modal .modal-content .closeIcon {
+  display: block !important;
+}
+
+/* Header slot */
+.modal-container .modal-content .header {
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 1.5rem 1rem;
+  border-bottom: 1px solid var(--gray-20);
+}
+
+/* Secondary appearance - full screen */
+.modal-container .modal-content.secondary {
+  height: 100%;
+  border-radius: initial;
+  max-height: 100%;
+}
+
+.modal-container .modal-content.secondary .closeIcon {
+  display: block;
+}
+
+/* Floating appearance */
+.modal-container .modal-content.floating {
+  width: 95%;
+  border-radius: 1rem;
+  max-height: 100%;
+  top: 50%;
+  position: absolute;
+  transform: translateY(-50%);
+}
+
+.modal-container .modal-content.floating .closeIcon {
+  display: block;
+}
+
+/* Open state - visible and slides up */
+.isopen {
+  opacity: 1;
+  visibility: visible;
+  transition: all 0.3s;
+}
+
+.isopen .modal-content {
+  transform: translateY(0%);
+}
+
+/* Desktop styles - centered modal */
+@media only screen and (min-width: 600px) {
+  .modal-container {
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal-container .swipe-indicator {
+    display: none;
+  }
+
+  .modal-container .modal-content {
+    width: 100%;
+    max-width: 32rem;
+    max-height: 80vh;
+    min-height: fit-content;
+    border-radius: 0.5rem;
+    animation: none;
+  }
+
+  .modal-container .modal-content.secondary {
+    height: auto;
+    max-height: 80%;
+    border-radius: 0.5rem;
+  }
+
+  .modal-container .modal-content.floating {
+    height: auto;
+    max-height: 80%;
+    border-radius: 0.5rem;
+    width: 32rem;
+    transform: none;
+    top: 0;
+    position: relative;
+  }
+
+  .modal-container .modal-content .swipe-box {
+    display: none;
+  }
+
+  .modal-container .modal-content .closeIcon {
+    display: block;
+  }
+}

@@ -1,0 +1,79 @@
+/**
+ * GtCheckbox Styles
+ * Matching Angular Groot UI checkbox styling
+ */
+
+.gt-checkbox-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.gt-checkbox {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.gt-checkbox-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  /* Prevent Materialize or global styles from adding pseudo-elements */
+  padding-left: 0 !important;
+}
+
+.gt-checkbox-label::before,
+.gt-checkbox-label::after {
+  content: none !important;
+  display: none !important;
+  border: none !important;
+}
+
+.gt-checkbox-checkmark {
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--primary-angrezi, #033418);
+  border-radius: 2px;
+  background-color: var(--white, #ffffff);
+  position: relative;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.gt-checkbox:checked ~ .gt-checkbox-label .gt-checkbox-checkmark {
+  background-color: var(--primary-hirva, #0ace5f);
+  border: none;
+}
+
+.gt-checkbox:checked ~ .gt-checkbox-label .gt-checkbox-checkmark::after {
+  content: "";
+  position: absolute;
+  width: 4px;
+  height: 9px;
+  border: solid var(--white, #ffffff);
+  border-width: 0 3px 3px 0;
+  border-radius: 2px;
+  transform: rotate(45deg);
+}
+
+.gt-checkbox:disabled ~ .gt-checkbox-label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.gt-checkbox:disabled ~ .gt-checkbox-label .gt-checkbox-checkmark {
+  background-color: var(--primary-hirva-algae, #8ddbaf);
+  border: none;
+  cursor: not-allowed;
+}
+
+.gt-checkbox:focus ~ .gt-checkbox-label .gt-checkbox-checkmark {
+  outline: none;
+}

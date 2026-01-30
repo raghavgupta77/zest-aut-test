@@ -1,0 +1,219 @@
+/**
+ * GtButton Styles
+ * EXACT match for Angular Groot UI gt-button component
+ * Extracted from node_modules/groot-ui/dist/groot-ui/p-4257e0d9.entry.js
+ */
+
+/* Base button - matches groot-ui .btn exactly */
+.gt-button,
+.btn.gt-button {
+  border: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  width: auto;
+  padding: 0.5em 0.75em;
+  font-family: inherit;
+  border-radius: 4em; /* Pill shape - EXACT match */
+  transition: all 0.1s;
+  border: 1px solid var(--primary-hirva, #0ace5f);
+  background-color: var(--primary-hirva, #0ace5f);
+  color: var(--white, #ffffff);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.875rem;
+  text-transform: none !important; /* Override Materialize's uppercase - Angular uses Shadow DOM so it doesn't need this */
+  text-align: center !important; /* Center text horizontally - Force override any conflicting styles */
+  display: inline-flex !important; /* Use flexbox for reliable centering */
+  align-items: center !important; /* Center vertically */
+  justify-content: center !important; /* Center horizontally */
+}
+
+/* Disabled state - Override Materialize's gray disabled style */
+.gt-button:disabled,
+.gt-button-disabled,
+.btn.gt-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  /* Override Materialize's !important styles to keep green color */
+  background-color: var(--primary-hirva, #0ace5f) !important;
+  border-color: var(--primary-hirva, #0ace5f) !important;
+  color: var(--white, #ffffff) !important;
+  pointer-events: auto; /* Override Materialize's pointer-events:none */
+}
+
+/* Active state */
+.gt-button:active,
+.btn.gt-button:active {
+  background: var(--primary-hirva60, #07893f);
+  border: 1px solid var(--primary-hirva60, #07893f);
+}
+
+/* Disabled active state */
+.gt-button:disabled:active,
+.btn.gt-button:disabled:active {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: var(--primary-hirva, #0ace5f) !important;
+}
+
+/* Primary appearance (default) */
+.gt-button-primary {
+  background-color: var(--primary-hirva, #0ace5f);
+  border: 1px solid var(--primary-hirva, #0ace5f);
+  color: var(--white, #ffffff);
+}
+
+/* Secondary appearance */
+.gt-button-secondary,
+.btn.gt-button.secondary {
+  background: var(--secondary-05, #0b1b80);
+  border: 1px solid var(--secondary-05, #0b1b80);
+}
+
+.gt-button-secondary:disabled,
+.btn.gt-button.secondary:disabled {
+  background: var(--secondary-80, #8d94bc) !important;
+  border: 1px solid var(--secondary-80, #8d94bc) !important;
+  color: var(--white, #ffffff) !important;
+  opacity: 0.6;
+}
+
+.gt-button-secondary:active,
+.btn.gt-button.secondary:active {
+  background: var(--secondary-60, #091564);
+  border: 1px solid var(--secondary-60, #091564);
+}
+
+/* Tertiary appearance */
+.gt-button-teritary,
+.btn.gt-button.teritary {
+  color: var(--primary-hirva, #0ace5f);
+  background: var(--white, #ffffff);
+}
+
+.gt-button-teritary:disabled,
+.btn.gt-button.teritary:disabled {
+  color: var(--primary-hirva-algae, #8ddbaf) !important;
+  border: 1px solid var(--primary-hirva-algae, #8ddbaf) !important;
+  background: var(--white, #ffffff) !important;
+  opacity: 0.6;
+}
+
+.gt-button-teritary:active,
+.btn.gt-button.teritary:active {
+  color: var(--primary-hirva60, #07893f);
+  border: 1px solid var(--primary-hirva60, #07893f);
+}
+
+/* Text button */
+.gt-button-text,
+.btn.gt-button.text {
+  border: none;
+  color: var(--primary-angrezi, #033418);
+  background: none;
+  border-bottom: 1px solid var(--primary-angrezi, #033418);
+  width: fit-content;
+  padding: initial;
+  height: initial;
+  text-decoration: underline;
+  text-underline-position: under;
+}
+
+/* Bold */
+.gt-button-bold,
+.btn.gt-button.bold {
+  font-weight: 600;
+}
+
+/* Size: auto */
+.gt-button-auto,
+.btn.gt-button.auto {
+  width: auto;
+  padding: 0.5em 0.75em;
+}
+
+/* Size: block (full width) */
+.gt-button-block,
+.btn.gt-button.block {
+  width: 100%;
+  padding: 0.75em 1em;
+  height: 2.75rem;
+}
+
+/* Size: xs */
+.gt-button-xs,
+.btn.gt-button.xs {
+  width: 5rem;
+  height: 1.5rem;
+  padding: 0.375em 1em;
+}
+
+/* Size: small */
+.gt-button-small,
+.btn.gt-button.small {
+  width: 7rem;
+  padding: initial;
+  height: 2rem;
+}
+
+/* Size: half */
+.gt-button-half,
+.btn.gt-button.half {
+  width: 9.75rem;
+  height: 2.75rem;
+  padding: 0.75em 1em;
+}
+
+/* Size: full */
+.gt-button-full,
+.btn.gt-button.full {
+  width: 20.5rem;
+  height: 2.75rem;
+}
+
+/* Desktop responsive - matches groot-ui @media only screen and (min-width: 600px) */
+@media only screen and (min-width: 600px) {
+  .gt-button,
+  .btn.gt-button {
+    font-size: 1rem;
+  }
+
+  .gt-button-auto,
+  .btn.gt-button.auto {
+    width: auto;
+    padding: 0.5em 0.75em;
+  }
+
+  .gt-button-block,
+  .btn.gt-button.block {
+    width: 100%;
+    padding: 0.75em 1em;
+    height: 3.5rem;
+  }
+
+  .gt-button-small,
+  .btn.gt-button.small {
+    width: 10rem;
+    height: 2.5rem;
+  }
+
+  .gt-button-half,
+  .btn.gt-button.half {
+    width: 14rem;
+    height: 3.5rem;
+  }
+
+  .gt-button-full,
+  .btn.gt-button.full {
+    width: 29rem;
+    height: 3.5rem;
+  }
+}
+
+/* Small screen override */
+@media only screen and (max-width: 340px) {
+  .gt-button-full,
+  .btn.gt-button.full {
+    width: 100%;
+  }
+}

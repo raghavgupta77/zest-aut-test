@@ -1,0 +1,120 @@
+/**
+ * EnterMobileNumberV3 Styles
+ * EXACT match for Angular enter-mobile-number-v3.component.scss
+ */
+
+.enter-mobile-screen-v3 {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  flex: 1 1 auto;
+}
+
+.enter-mobile-screen-v3 .header-groot {
+  margin: 25px 0 0 16px;
+}
+
+/* Footer - NO padding here, submitter-wrapper handles its own padding */
+.enter-mobile-screen-v3 .footer {
+  width: 100%;
+  max-width: 464px;
+}
+
+.enter-mobile-screen-v3 .footer .footer-text {
+  margin-top: 10px;
+  /* padding: 0 16px; - commented out in Angular */
+  box-sizing: border-box;
+  font-size: 12px;
+  color: #999999;
+  line-height: 15.6px;
+  padding-bottom: 10px;
+  text-align: center;
+}
+
+.enter-mobile-screen-v3 .footer .green-btn-text {
+  text-decoration: underline;
+  color: #0ACE5F;
+}
+
+.enter-mobile-screen-v3 .footer .green-btn-text:hover {
+  cursor: pointer;
+}
+
+.enter-mobile-screen-v3 .footer .app-banner {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 16px;
+  background-color: #000000;
+  color: #ffffff;
+  border: #000000;
+}
+
+.enter-mobile-screen-v3 .footer .app-banner .app-content {
+  display: flex;
+  width: 100%;
+}
+
+.enter-mobile-screen-v3 .footer .app-banner .app-content .app-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 8px;
+}
+
+.enter-mobile-screen-v3 .footer .app-banner .app-content .app-text .download-text {
+  font-family: 'Geomanist';
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 12px;
+  letter-spacing: 0em;
+  text-align: left;
+  padding-bottom: 4px;
+}
+
+.enter-mobile-screen-v3 .footer .app-banner .app-content .app-text .sub-text {
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 12px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #F0F0F0;
+}
+
+.horizontal-rule {
+  border-bottom: 4px solid #FFFFFF;
+  margin: 20px 0;
+}
+
+@media screen and (max-width: 412px) {
+  .horizontal-rule {
+    margin: 5px 0;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .enter-mobile-screen-v3 .footer .app-banner {
+    display: none;
+  }
+}
+
+.auth-form-v3 {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  flex: 1 1 auto;
+}
+
+.auth-form-v3 .content {
+  padding: 0 16px;
+}
+
+.auth-form-v3 .content .text-input-container .input-wrapper .text-input {
+  margin: 0 !important;
+}
+
+.auth-form-v3 .content .text-input-container .input-wrapper input:not([type]):focus:not([readonly]),
+.auth-form-v3 .content .text-input-container .input-wrapper input[type="tel"]:focus:not([readonly]) {
+  box-shadow: none !important;
+}

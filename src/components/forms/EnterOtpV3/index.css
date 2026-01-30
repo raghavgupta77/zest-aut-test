@@ -1,0 +1,183 @@
+/**
+ * EnterOtpV3 Styles
+ * Exact match for Angular enter-otp-v3.component.scss
+ */
+
+.enter-otp-v3 {
+  font-family: 'Inter';
+}
+
+.enter-otp-v3 .modal-wrapper {
+  padding: 16px;
+}
+
+.enter-otp-v3 .resend-label {
+  color: #033418 !important;
+  margin-bottom: 0.25rem !important;
+  font-weight: 600 !important;
+  line-height: 1.25rem !important;
+  font-size: 1rem !important;
+  margin-top: 0 !important;
+  padding: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.enter-otp-v3 .errMSg {
+  font-size: 0.875rem;
+  color: rgb(240, 50, 60);
+  line-height: 130%;
+  margin: 0.25rem 0px 0px;
+  min-height: 0;
+  height: auto;
+}
+
+/* Hide errMSg when empty to prevent spacing */
+.enter-otp-v3 .errMSg:empty {
+  display: none;
+  margin: 0;
+  height: 0;
+  min-height: 0;
+}
+
+.enter-otp-v3 .submit-btn-wrapper {
+  margin: 24px 0 16px;
+}
+
+.enter-otp-v3 .resend-wrapper {
+  display: flex;
+  color: #999999;
+  font-size: 12px;
+  margin-bottom: 16px;
+}
+
+.enter-otp-v3 .resend-wrapper .resend-btn {
+  display: flex;
+}
+
+.enter-otp-v3 .green-btn-text {
+  cursor: pointer;
+  color: #0ACE5F;
+  text-decoration: underline;
+}
+
+.enter-otp-v3 .green-btn-text.disabled-green {
+  pointer-events: none;
+  color: #8DDBAF;
+  cursor: not-allowed;
+}
+
+/* OTP Input Container */
+.enter-otp-v3 .otp-input-container {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 0;
+}
+
+/* OTP Input Styles - Fixed size matching Angular config exactly */
+.enter-otp-v3 .otp-input-box {
+  width: 3rem !important;
+  height: 3.5rem !important;
+  font-size: 1rem !important;
+  margin-right: 0.5rem !important;
+  outline: none !important;
+  box-sizing: border-box !important;
+  transition: all 0.2s ease 0s !important;
+  background: rgb(247, 249, 248) !important;
+  border: 0.0625rem solid rgb(230, 230, 230) !important;
+  border-radius: 0.5rem !important;
+  margin-bottom: 0 !important;
+  text-align: center !important;
+}
+
+/* OTP Input Focus State - Matching Angular global styles.scss */
+.enter-otp-v3 input[type="tel"]:focus:not([readonly]):focus,
+.enter-otp-v3 .otp-input-box:focus {
+  border: 1px solid #1eba68 !important;
+  box-shadow: none !important;
+  background: #ffffff !important;
+}
+
+/* Countdown Timer - Exact match for Angular */
+#countdown {
+  position: relative;
+  margin: auto;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+}
+
+#countdown-number {
+  color: #999999;
+  display: inline-block;
+  margin-left: 6px;
+}
+
+/* SVG inside countdown */
+#countdown svg {
+  position: absolute;
+  top: -12px;
+  right: 0;
+  width: 30px;
+  height: 30px;
+  transform: rotateY(-180deg) rotateZ(-90deg);
+}
+
+#countdown svg circle {
+  stroke-dasharray: 63px;
+  stroke-dashoffset: 0px;
+  stroke-linecap: round;
+  stroke-width: 1px;
+  stroke: #0ACE5F;
+  fill: none;
+  animation: countdown 30s linear 1 forwards;
+}
+
+@keyframes countdown {
+  from {
+    stroke-dashoffset: 0px;
+  }
+  to {
+    stroke-dashoffset: 63px;
+  }
+}
+
+/* Form container */
+.enter-otp-v3-form {
+  position: relative;
+}
+
+/* Button overlay - only covers the button, NOT the entire form */
+.enter-otp-v3-form .submit-btn-wrapper {
+  position: relative;
+}
+
+.enter-otp-v3-form .btn-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  z-index: 10;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #fff;
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

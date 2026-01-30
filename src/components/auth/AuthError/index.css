@@ -1,0 +1,42 @@
+/**
+ * AuthError Styles
+ * Exact match for Angular auth-error.component.scss
+ */
+
+.auth-modal-error {
+  font-family: 'Inter', sans-serif;
+}
+
+.auth-modal-error .heading {
+  color: #033418;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+}
+
+.auth-modal-error .description {
+  margin-bottom: 1.5rem;
+  line-height: 1.25rem;
+}
+
+.auth-modal-error .modal-wrapper {
+  padding: 16px;
+  text-align: center;
+}
+
+.auth-modal-error .text-wrapper {
+  max-width: 70%;
+  margin: auto;
+}
+
+.auth-modal-error .circle-wrapper {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--input-border-color, #f7f9f8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  margin: 20px auto;
+}

@@ -1,0 +1,53 @@
+/**
+ * AuthLoader Styles
+ * Exact match for Angular loader.component.scss
+ */
+
+.loader-box {
+  background: rgba(250, 250, 250, 0.925);
+  bottom: 0;
+  display: block;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 21;
+}
+
+.text-logo {
+  margin: 50px auto !important;
+}
+
+.loader-block {
+  margin: 0 auto;
+  padding: 7.5rem 0;
+  position: fixed;
+  width: 100%;
+  z-index: 22;
+}
+
+.loader-block .welcome-content h2 {
+  color: #444444;
+  font-size: 1.2em;
+  font-weight: 300;
+  text-align: center;
+}
+
+.loader-block .processing-logo {
+  width: 120px;
+  height: 120px;
+  position: relative;
+  margin: 50px auto;
+}
+
+.loader-block .processing-logo .logo {
+  width: 100%;
+  position: absolute;
+  left: 27.5%;
+  top: 27.5%;
+}
+
+.loader-block .processing-logo .logo img {
+  width: 100%;
+  z-index: 5;
+}

@@ -1,0 +1,46 @@
+/**
+ * CSS Custom Properties (Variables)
+ * Converted from Angular SCSS variables to ensure exact color matching
+ */
+
+:root {
+  /* Theme Colors */
+  --theme-color: #1eba68;
+  --theme-xiaomi-color: #ff6700;
+  --theme-blue-color: #40a9fc;
+  --google-button-blue-color: #4286f5;
+  --twitter-button-blue-color: #0086fe;
+  --theme-red-color: #dd4421;
+  
+  /* Text Colors */
+  --text-grey-color: #4a4a4a;
+  --light-grey-color: #b3c1c9;
+  --text-disabled-color: #B3C1C9;
+  --label-text-color: #b9b9b9;
+  --label-grey-color: #cbcbcb;
+  --caption-color: #4f6f81;
+  --place-holder-color: #aaaaaa;
+  --input-text-color: #1c465d;
+  --text-blue-color: #228CDB;
+  --error-color: #dd4421;
+  
+  /* Background Colors */
+  --white-color: #ffffff;
+  --title-step-background-color: #fffcd1;
+  --header-color: #1c465d;
+  
+  /* Border Colors */
+  --input-border: #e6eaed;
+  --input-border-color: #f7f9f8;
+  --disabled-color: #e6eaed;
+  --disabled-blue-color: #91C6ED;
+  
+  /* Base Font Size */
+  --base-font-size: 16px;
+  
+  /* Viewport Height (for mobile browser address bar fix) */
+  --vh: 1vh;
+  
+  /* Note: Groot UI variables (--primary-angrezi, --gt-title-font-family, etc.) 
+     are now loaded from groot-ui.css which is imported first in index.css */
+}

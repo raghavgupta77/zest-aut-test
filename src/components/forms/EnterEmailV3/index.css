@@ -1,0 +1,171 @@
+/**
+ * EnterEmailV3 Styles
+ * Matches styling of EnterMobileNumberV3 and original email form
+ */
+
+.enter-email-screen-v3 {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  margin-top: 25px;
+}
+
+.enter-email-screen-v3 .header-groot {
+  padding: 0 16px;
+}
+
+.enter-email-screen-v3 .horizontal-rule {
+  border-bottom: 4px solid #FFFFFF;
+  margin: 20px 0;
+}
+
+@media screen and (max-width: 412px) {
+  .enter-email-screen-v3 .horizontal-rule {
+    margin: 5px 0;
+  }
+}
+
+.enter-email-screen-v3 .auth-form-v3 {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  flex: 1 1 auto;
+}
+
+.enter-email-screen-v3 .auth-form-v3 .content {
+  padding: 0 16.5px;
+}
+
+.enter-email-screen-v3 .auth-form-v3 .content .email-input-wrapper {
+  height: 7rem !important;
+  z-index: 8;
+}
+
+.enter-email-screen-v3 .auth-form-v3 .content .email-input-wrapper .text-input-container .input-wrapper .text-input {
+  margin: 0 !important;
+}
+
+.enter-email-screen-v3 .auth-form-v3 .content .email-input-wrapper .text-input-container .input-wrapper input:not([type]):focus:not([readonly]),
+.enter-email-screen-v3 .auth-form-v3 .content .email-input-wrapper .text-input-container .input-wrapper input[type="email"]:focus:not([readonly]) {
+  box-shadow: none !important;
+}
+
+.enter-email-screen-v3 .auth-form-v3 .content .whatsapp-container {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.enter-email-screen-v3 .auth-form-v3 .content .whatsapp-container p.label {
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  color: #737373;
+}
+
+.enter-email-screen-v3 .auth-form-v3 .content .whatsapp-container p.label img {
+  margin-left: 5px;
+}
+
+.enter-email-screen-v3 .footer {
+  padding: 0 16px;
+  padding-bottom: 24px;
+}
+
+/* Finoramic section styles */
+.enter-email-screen-v3 .auth-finoramic {
+  margin-top: 16px;
+}
+
+.enter-email-screen-v3 .google-auth-button {
+  width: 100%;
+}
+
+.enter-email-screen-v3 .google-auth-button img {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.enter-email-screen-v3 .google-auth-button button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 0.75em 1em;
+  height: 3.5rem;
+  background: transparent;
+  color: #0ACE5F;
+  border: 1px solid #0ace5f;
+  border-radius: 4em;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.enter-email-screen-v3 .strike {
+  display: block;
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  margin: 1.5rem 0;
+}
+
+.enter-email-screen-v3 .strike > span {
+  position: relative;
+  display: inline-block;
+  color: #999999;
+  font-size: 12px !important;
+}
+
+.enter-email-screen-v3 .strike span:before,
+.enter-email-screen-v3 .strike span:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 9999px;
+  height: 1px;
+  background: #ebebeb;
+}
+
+.enter-email-screen-v3 .strike span:before {
+  right: 100%;
+  margin-right: 15px;
+}
+
+.enter-email-screen-v3 .strike span:after {
+  left: 100%;
+  margin-left: 15px;
+}
+
+/* Sticky form for Finoramic */
+.enter-email-screen-v3 .auth-form-v3.sticky {
+  height: 85%;
+  background: white;
+}
+
+.enter-email-screen-v3 .auth-form-v3.sticky .whatsapp-container.centred {
+  position: static !important;
+  transform: translate(0, 0);
+  margin-bottom: 20px;
+}
+
+/* Responsive styles */
+@media screen and (max-width: 600px) {
+  .enter-email-screen-v3 .google-auth-button button {
+    font-size: 14px;
+    height: 46px;
+  }
+
+  .enter-email-screen-v3 .footer .whatsapp-container.centred {
+    left: 20px;
+    transform: translate(0, 0);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .enter-email-screen-v3 .auth-finoramic {
+    max-width: 464px;
+    margin: auto;
+  }
+}

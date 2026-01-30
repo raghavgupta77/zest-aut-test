@@ -1,0 +1,10 @@
+/**
+ * GtSwipe Styles
+ * Matching Angular Groot UI swipe wrapper styling
+ */
+
+.gt-swipe {
+  width: 100%;
+  height: 100%;
+  touch-action: pan-y;
+}

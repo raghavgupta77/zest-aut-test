@@ -1,0 +1,78 @@
+/**
+ * WhatsApp Consent Slider Styles
+ * Exact match for Angular slider-vv styling
+ */
+
+.slider-vv {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 20px;
+  width: 40px;
+  border-radius: 10px;
+  margin: 0 10px 0 0;
+  padding: 2px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  flex-shrink: 0;
+}
+
+/* On state - green background */
+.slider-vv.slider-on {
+  background-color: #2BB25D;
+  justify-content: flex-end;
+}
+
+/* Off state - gray background */
+.slider-vv.slider-off {
+  background-color: #808080;
+  justify-content: flex-start;
+}
+
+.slider-vv:hover {
+  cursor: pointer;
+}
+
+.slider-vv:focus {
+  outline: none;
+}
+
+.select-cir {
+  border-radius: 50%;
+  background-color: white;
+  width: 16px;
+  height: 16px;
+  transition: transform 0.2s ease;
+}
+
+.whatsapp-container {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.whatsapp-container p.label {
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  color: #737373;
+  margin: 0;
+}
+
+.whatsapp-container p.label img {
+  margin-left: 5px;
+  width: 16px;
+  height: 16px;
+}
+
+.whatsapp-container.centred {
+  /* Position absolute styling when needed */
+}
+
+@media screen and (max-width: 600px) {
+  .whatsapp-container.centred {
+    left: 20px;
+    transform: translate(0, 0);
+  }
+}

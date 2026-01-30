@@ -1,0 +1,9 @@
+/* App.css - Main application styles */
+/* Removed default Vite styles - using custom authentication styles */
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}

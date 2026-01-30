@@ -1,0 +1,40 @@
+/**
+ * ForgotPassword Styles
+ */
+
+.forgot-password-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 16px;
+}
+
+.forgot-password-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.error-message {
+  color: var(--error-color, #dd4421);
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+.footer-links {
+  text-align: center;
+  margin-top: 16px;
+}
+
+.back-to-login {
+  color: var(--theme-color, #1eba68);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.success-message {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  text-align: center;
+}

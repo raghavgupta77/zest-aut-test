@@ -1,0 +1,20 @@
+/* 
+ * CSS Import Order - Matching Angular exactly:
+ * 1. Materialize CSS (base framework)
+ * 2. Custom styles (overrides)
+ * 3. Groot UI CSS (component library)
+ * 4. Tailwind (utilities)
+ */
+
+/* 1. Materialize CSS - provides grid, inputs, cards, forms, responsive utilities */
+@import './styles/materialize.min.css';
+
+/* 2. Groot UI CSS - provides CSS variables and component styles */
+@import './styles/groot-ui.css';
+
+/* 3. Custom variables and base styles (overrides materialize and groot-ui) */
+@import './styles/variables.css';
+@import './styles/base.css';
+
+/* 4. Tailwind CSS v4 - utilities (lowest priority) */
+@import "tailwindcss";

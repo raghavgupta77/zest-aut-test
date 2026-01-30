@@ -1,0 +1,56 @@
+/**
+ * AuthLoader Component
+ * Exact React replacement for Angular LoaderComponent
+ * Controlled by LoaderService
+ */
+
+import React, { useState, useEffect } from 'react';
+import { LoaderService, Loader } from '../../../services/loaderService';
+import './index.css';
+
+export const AuthLoader: React.FC = () => {
+  const [showLoader, setShowLoader] = useState<boolean>(false);
+  const [loaderTextMessage, setLoaderTextMessage] = useState<string>('');
+
+  useEffect(() => {
+    const unsubscribe = LoaderService.subscribe((loader: Loader) => {
+      setShowLoader(loader.showLoader);
+      setLoaderTextMessage(loader.loaderTextMessage);
+    });
+
+    return unsubscribe;
+  }, []);
+
+  if (!showLoader) return null;
+
+  return (
+    <div>
+      <div className="loader-box"></div>
+      <div className="loader-block">
+        <div className="row">
+          <div className="col l12 m12 s12 center">
+            <div className={`processing-logo ${showLoader && loaderTextMessage ? 'text-logo' : ''}`}>
+              <div className="logo">
+                <img
+                  src="/src/assets/images/authentication/loader-logo.svg"
+                  alt="Loading..."
+                />
+              </div>
+            </div>
+            {showLoader && (
+              <div className="auth-page-container container">
+                <div className="welcome-user">
+                  <div className="welcome-content">
+                    <h2>{loaderTextMessage}</h2>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default AuthLoader;

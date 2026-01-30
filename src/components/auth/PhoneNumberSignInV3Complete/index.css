@@ -1,0 +1,367 @@
+/**
+ * PhoneNumberSignInV3 Styles
+ * Exact match for Angular phone-number-sign-in-v3.component.scss
+ */
+
+.enter-mobile-v3-container {
+  flex: 1 1 auto;
+}
+
+.submitter-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 464px;
+  padding: 0 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding-bottom: 24px;
+}
+
+.submitter-wrapper.no-padding {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.submitter-wrapper.email-btn {
+  position: absolute;
+  bottom: 24px;
+  padding-bottom: 0;
+}
+
+@media screen and (min-width: 786px) {
+  .submitter-wrapper.email-btn {
+    width: 67.5%;
+    bottom: 32px;
+  }
+}
+
+.star {
+  color: red;
+}
+
+.slider-vv {
+  background-color: #2BB25D;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 18px;
+  width: 40px;
+  border-radius: 10px;
+  margin: 0 10px;
+  padding: 2px;
+}
+
+.slider-hidden {
+  visibility: hidden;
+}
+
+.slider-vv:hover {
+  cursor: pointer;
+}
+
+.select-cir {
+  border-radius: 30px;
+  background-color: white;
+  width: 16px;
+}
+
+.auth-bg-wrapper {
+  background-color: #E5E5E5;
+  min-height: 100vh;
+  height: 100%;
+  width: 100%;
+}
+
+.auth-bg-wrapper .enter-email-container {
+  margin-top: 25px;
+}
+
+.auth-bg-wrapper .enter-email-container .email-content-wrapper {
+  margin: 0 16px;
+}
+
+.auth-bg-wrapper .enter-email-container .whatsapp-container {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.auth-bg-wrapper .enter-email-container .whatsapp-container p.label {
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  color: #737373;
+}
+
+.auth-bg-wrapper .enter-email-container .whatsapp-container p.label img {
+  margin-left: 5px;
+}
+
+.auth-v3-contianer {
+  display: flex;
+  flex-flow: column;
+  min-height: 100vh;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  background-color: #fff;
+  border: 1px solid #F7F9F8;
+  box-shadow: 0px 0px 4px 2px #0000000A;
+}
+
+.auth-v3-contianer .modal-wrapper {
+  padding: 16px;
+}
+
+.auth-v3-contianer .modal-wrapper .bolt-logo {
+  padding-bottom: 16px;
+}
+
+.auth-v3-contianer .modal-wrapper h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1A1A1A;
+  padding-bottom: 8px;
+}
+
+.auth-v3-contianer .modal-wrapper p {
+  padding-bottom: 32px;
+  font-weight: normal;
+  font-size: 12px;
+  color: #737373;
+}
+
+.logo-header {
+  padding: 32px 16px 0 16px;
+}
+
+.logo-header img {
+  height: 45px;
+}
+
+.horizontal-rule {
+  border-bottom: 4px solid #FFFFFF;
+  margin: 20px 0;
+}
+
+@media screen and (max-width: 412px) {
+  .horizontal-rule {
+    margin: 5px 0;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .logo-header {
+    padding: 24px 16px 0 16px;
+  }
+}
+
+.enter-email-container .email-container {
+  margin-top: 0;
+}
+
+.enter-email-container .email-input-wrapper {
+  height: 7rem !important;
+  z-index: 8;
+}
+
+.google-auth-button {
+  width: 100%;
+}
+
+.google-auth-button img {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.google-auth-button button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 0.75em 1em;
+  height: 3.5rem;
+  background: transparent;
+  color: #0ACE5F;
+  border: 1px solid #0ace5f;
+  border-radius: 4em;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.strike {
+  display: block;
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  margin: 1.5rem 0;
+}
+
+.strike > span {
+  position: relative;
+  display: inline-block;
+  color: #999999;
+  font-size: 12px !important;
+}
+
+.strike span:before,
+.strike span:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 9999px;
+  height: 1px;
+  background: #ebebeb;
+}
+
+.strike span:before {
+  right: 100%;
+  margin-right: 15px;
+}
+
+.strike span:after {
+  left: 100%;
+  margin-left: 15px;
+}
+
+@media screen and (min-width: 768px) {
+  .auth-v3-contianer {
+    width: 688px;
+    margin: 0 auto;
+    padding: 0 110px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .auth-finoramic {
+    max-width: 464px;
+    margin: auto;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .google-auth-button button {
+    font-size: 14px;
+    height: 46px;
+  }
+
+  .whatsapp-container.centred {
+    left: 20px;
+    transform: translate(0, 0);
+  }
+
+  form.sticky {
+    height: 85%;
+    background: white;
+  }
+
+  form.sticky .enter-email-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  form.sticky .whatsapp-container.centred {
+    position: static !important;
+    transform: translate(0, 0);
+    margin-bottom: 20px;
+  }
+}
+
+@media screen and (max-height: 440px) {
+  .auth-bg-wrapper {
+    height: 135%;
+  }
+}
+
+/* Auth Form V3 Styles */
+.auth-form-v3 {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  flex: 1 1 auto;
+}
+
+.auth-form-v3 .content {
+  padding: 0 16.5px;
+}
+
+.auth-form-v3 .content .text-input-container .input-wrapper .text-input {
+  margin: 0 !important;
+}
+
+.auth-form-v3 .content .text-input-container .input-wrapper input:not([type]):focus:not([readonly]),
+.auth-form-v3 .content .text-input-container .input-wrapper input[type="tel"]:focus:not([readonly]) {
+  box-shadow: none !important;
+}
+
+.auth-v3-contianer .enter-email-container .email-content-wrapper .email-container .email-input-wrapper {
+  height: 7rem !important;
+  z-index: 8;
+}
+
+.auth-v3-contianer .enter-email-container .email-content-wrapper .email-container .email-input-wrapper .text-input-container .input-wrapper .text-input {
+  margin: 0 !important;
+}
+
+.auth-v3-contianer .enter-email-container .email-content-wrapper .email-container .email-input-wrapper .text-input-container .input-wrapper input:not([type]):focus:not([readonly]),
+.auth-v3-contianer .enter-email-container .email-content-wrapper .email-container .email-input-wrapper .text-input-container .input-wrapper input[type="email"]:focus:not([readonly]) {
+  box-shadow: none !important;
+}
+
+/* Logout Confirmation Modal */
+.logout-confirm-modal {
+  font-family: 'Inter', sans-serif;
+}
+
+.logout-confirm-modal .modal-wrapper {
+  padding: 16px;
+  text-align: center;
+}
+
+.logout-confirm-modal .text-wrapper {
+  max-width: 80%;
+  margin: auto;
+}
+
+.logout-confirm-modal .circle-wrapper {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--input-border-color, #f7f9f8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  margin: 20px auto;
+}
+
+.logout-confirm-modal .heading {
+  color: #033418;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.25rem;
+}
+
+.logout-confirm-modal .description {
+  margin-bottom: 1.5rem;
+  line-height: 1.25rem;
+  font-size: 14px;
+  color: #737373;
+}
+
+.logout-confirm-modal .logout-modal-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.logout-confirm-modal .cancel-btn {
+  background-color: transparent !important;
+  border: 1px solid #0ACE5F !important;
+  color: #0ACE5F !important;
+}

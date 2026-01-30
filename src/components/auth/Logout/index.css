@@ -1,0 +1,22 @@
+/**
+ * Logout Styles
+ */
+
+.logout-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+}
+
+.logout-content h2 {
+  font-size: 24px;
+  color: var(--text-grey-color, #4a4a4a);
+  margin-bottom: 16px;
+}
+
+.logout-content p {
+  font-size: 16px;
+  color: var(--text-grey-color, #4a4a4a);
+}

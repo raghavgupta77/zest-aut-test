@@ -1,0 +1,10 @@
+/**
+ * RedirectComponent Styles
+ * V3 auth uses its own full-screen layout
+ */
+
+/* V3 auth takes the full viewport */
+.auth-bg-wrapper {
+  min-height: 100vh;
+  width: 100%;
+}

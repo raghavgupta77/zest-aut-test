@@ -1,0 +1,73 @@
+/**
+ * SubmitterComponent Styles
+ * EXACT match for Angular submitter.component.scss
+ */
+
+.submitter-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 464px;
+  padding: 0 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding-bottom: 24px;
+  box-sizing: border-box;
+}
+
+.submitter-wrapper.no-padding {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.submitter-wrapper.email-btn {
+  position: absolute;
+  bottom: 24px;
+  padding-bottom: 0;
+}
+
+@media screen and (min-width: 786px) {
+  .submitter-wrapper.email-btn {
+    width: 67.5%;
+    bottom: 32px;
+  }
+}
+
+@media screen and (max-height: 440px) {
+  .submitter-wrapper.email-btn {
+    position: relative;
+    top: 15px;
+  }
+}
+
+.income-consent {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  /* Align checkbox to top of text */
+  margin: 15px 0;
+  border-radius: 15px;
+  padding: 14px;
+}
+
+.income-consent .gt-checkbox-wrapper {
+  margin-right: 10px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  /* Visual alignment with text */
+}
+
+.income-consent .text {
+  font-size: 12px;
+}
+
+.income-consent .text .star {
+  color: red;
+}
+
+.income-consent .text .more:hover {
+  cursor: pointer;
+}
+
+.income-consent .text a {
+  color: #1FBA68;
+}

@@ -1,0 +1,41 @@
+/**
+ * AuthHeader Styles
+ * Exact match for Angular header.component.scss
+ */
+
+.auth-nav {
+  background-color: var(--white-color, #ffffff);
+  border-bottom: 2px solid #E8E8E8;
+  box-shadow: none;
+  min-height: 64px;
+}
+
+.auth-nav-wrapper {
+  position: relative;
+}
+
+.auth-nav-wrapper a.back-arrow {
+  position: absolute;
+  color: var(--text-grey-color, #4a4a4a);
+  top: 4px;
+  left: 2.5%;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.auth-nav-wrapper a.back-arrow .material-icons {
+  font-size: 24px;
+}
+
+.auth-nav-wrapper a.auth-brand-logo {
+  outline: none;
+  cursor: auto;
+  display: block;
+  text-align: center;
+}
+
+.auth-nav-wrapper a.auth-brand-logo .auth-logo-image {
+  max-width: 120px;
+  vertical-align: middle;
+  cursor: auto;
+}

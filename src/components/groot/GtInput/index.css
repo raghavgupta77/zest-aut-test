@@ -1,0 +1,211 @@
+/**
+ * GtInput Styles
+ * Matching Angular Groot UI gt-input component EXACTLY
+ * Extracted from node_modules/groot-ui/dist/groot-ui/p-4257e0d9.entry.js
+ */
+
+/* Main container - matches groot-ui .text-input-container */
+.gt-input-wrapper,
+.text-input-container {
+  display: flex;
+  flex-direction: column;
+  text-align: initial;
+}
+
+/* Label styling - matches groot-ui .label */
+.gt-input-wrapper .gt-input-label,
+.text-input-container .label {
+  font-family: inherit;
+  font-style: normal;
+  font-weight: 600;
+  text-align: initial;
+  line-height: 140%;
+  font-size: 0.875rem;
+  color: var(--primary-angrezi, #033418);
+  padding-bottom: 0.25rem;
+}
+
+/* Input wrapper - matches groot-ui .input-wrapper */
+.gt-input-container,
+.input-wrapper {
+  position: relative;
+  font-size: 0.875rem;
+}
+
+/* Input field styling - matches groot-ui .text-input */
+.gt-input-wrapper .gt-input,
+.text-input-container .text-input {
+  width: auto;
+  outline: none;
+  font-family: inherit;
+  font-size: inherit;
+  box-sizing: border-box;
+  border: 0.06em solid transparent;
+  background: var(--gray-0, #f7f9f8);
+  padding: 0 1rem;
+  transition: all 0.2s;
+  color: var(--gray-90, #1a1a1a);
+  border-radius: 0.25em;
+  line-height: 2.75rem;
+  height: 2.75rem;
+}
+
+/* Focus and active states */
+.gt-input-wrapper .gt-input:active,
+.gt-input-wrapper .gt-input:focus,
+.text-input-container .text-input:active,
+.text-input-container .text-input:focus {
+  border: 0.06em solid var(--primary-hirva, #0ace5f);
+  background: var(--white, #ffffff);
+}
+
+/* Disabled state */
+.gt-input-wrapper .gt-input:disabled,
+.text-input-container .text-input:disabled {
+  background: var(--gray-20, #f0f0f0);
+  cursor: not-allowed;
+}
+
+.gt-input-wrapper .gt-input:disabled:active,
+.gt-input-wrapper .gt-input:disabled:focus,
+.text-input-container .text-input:disabled:active,
+.text-input-container .text-input:disabled:focus {
+  border: none;
+  border: 0.06em solid transparent;
+  outline: none;
+  background: var(--gray-20, #f0f0f0);
+}
+
+/* Full width variant */
+.gt-input-wrapper .gt-input.full,
+.text-input-container .text-input.full {
+  width: 100%;
+  max-width: 20.5rem;
+  font-size: inherit;
+  font-weight: normal;
+}
+
+/* Block (full width) variant - matches groot-ui .text-input.block */
+.gt-input-wrapper .gt-input.block,
+.text-input-container .text-input.block,
+.gt-input-block .gt-input,
+.gt-input-block .text-input {
+  width: 100%;
+}
+
+/* Prefix styling - matches groot-ui .text-input.pre */
+.gt-input-wrapper .gt-input.pre,
+.text-input-container .text-input.pre,
+.gt-input-has-prefix .gt-input,
+.gt-input-has-prefix .text-input {
+  padding-left: 2.8rem;
+}
+
+/* Error state - matches groot-ui .error */
+.gt-input-wrapper .gt-input.error,
+.gt-input-wrapper .gt-input.error:focus,
+.text-input-container .text-input.error,
+.text-input-container .text-input.error:focus,
+.gt-input-error .gt-input,
+.gt-input-error .text-input {
+  border: 0.0625rem solid var(--error, #f0323c);
+}
+
+/* Prefix element - matches groot-ui .pre-fix */
+.gt-input-prefix,
+.pre-fix {
+  position: absolute;
+  left: 0.875rem;
+  font-size: inherit;
+  font-family: inherit;
+  line-height: 2.75rem;
+  height: 100%;
+  color: var(--hirava-mantle, #8d9690);
+  display: flex;
+  align-items: center;
+}
+
+/* Help text - matches groot-ui .txt */
+.gt-input-help-text,
+.txt {
+  font-family: inherit;
+  font-size: 0.75rem;
+  line-height: 130%;
+  display: flex;
+  align-items: center;
+  color: var(--gray-60, #999999);
+  margin: 0.25rem 0 0 0;
+}
+
+/* Error text - matches groot-ui .errorTxt */
+.gt-input-error-message,
+.errorTxt {
+  color: var(--error, #f0323c);
+  font-family: inherit;
+  font-size: 0.75rem;
+  line-height: 130%;
+  display: flex;
+  align-items: center;
+  margin: 0.25rem 0 0 0;
+}
+
+/* Desktop styles - matches groot-ui @media only screen and (min-width: 600px) */
+@media only screen and (min-width: 600px) {
+
+  .gt-input-wrapper .gt-input-label,
+  .text-input-container .label {
+    font-size: 1rem;
+  }
+
+  .gt-input-container,
+  .input-wrapper {
+    font-size: 1rem;
+  }
+
+  .gt-input-wrapper .gt-input,
+  .text-input-container .text-input {
+    line-height: 3.5rem;
+    height: 3.5rem;
+  }
+
+  .gt-input-wrapper .gt-input.full,
+  .text-input-container .text-input.full {
+    max-width: 29rem;
+  }
+
+  .gt-input-wrapper .gt-input.pre,
+  .text-input-container .text-input.pre,
+  .gt-input-has-prefix .gt-input,
+  .gt-input-has-prefix .text-input {
+    padding-left: 3rem;
+  }
+
+  .gt-input-help-text,
+  .txt {
+    font-size: 0.875rem;
+  }
+
+  .gt-input-prefix,
+  .pre-fix {
+    left: 1rem;
+    line-height: 3.5rem;
+  }
+
+  .gt-input-error-message,
+  .errorTxt {
+    font-size: 0.875rem;
+  }
+}
+
+/* Autofill styling */
+.gt-input-wrapper .gt-input:-webkit-autofill,
+.gt-input-wrapper .gt-input:-webkit-autofill:hover,
+.gt-input-wrapper .gt-input:-webkit-autofill:focus,
+.gt-input-wrapper .gt-input:-webkit-autofill:active,
+.text-input-container .text-input:-webkit-autofill,
+.text-input-container .text-input:-webkit-autofill:hover,
+.text-input-container .text-input:-webkit-autofill:focus,
+.text-input-container .text-input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0px 1000px var(--white, #ffffff) inset !important;
+  box-shadow: 0 0 0px 1000px var(--white, #ffffff) inset !important;
+}
