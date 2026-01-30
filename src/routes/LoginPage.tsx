@@ -29,6 +29,7 @@ import {
   removeAuthenticationSession,
   setContactNumber,
   setSignUpFlag,
+  setZestToken,
 } from '../utils/sessionStorage';
 import { checkIfErrorCodeRetured } from '../utils/helpers';
 import { focusElementById, scrollToTop } from '../utils/autoFocus';
@@ -211,6 +212,7 @@ export function LoginPage() {
       loaderService.next({ showLoader: true, loaderTextMessage: '' });
       addToast('success', 'Login successful!');
       setShowOtpForm(false);
+      setZestToken(response);
       console.log('Login token received:', response);
 
     } catch (error: any) {
@@ -315,7 +317,7 @@ export function LoginPage() {
           googlePayRedirection={false}
           MerchantCustomerId=""
           onGenerateOtp={handleMobileSubmit}
-          onMobileNumberUpdate={() => {}}
+          onMobileNumberUpdate={() => { }}
           className="enter-mobile-v3-container"
         />
 

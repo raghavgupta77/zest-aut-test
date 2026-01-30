@@ -30,6 +30,7 @@ import {
   removeAuthenticationSession,
   setContactNumber,
   setSignUpFlag,
+  setZestToken,
 } from '../utils/sessionStorage';
 import { isValidAuthSessionStorage, safeParseAccessToken, checkIfErrorCodeRetured, isIframe } from '../utils/helpers';
 import { scrollToTop } from '../utils/autoFocus';
@@ -259,6 +260,7 @@ export function EmailPage() {
       loaderService.next({ showLoader: true, loaderTextMessage: '' });
       addToast('success', 'Registration successful!');
       console.log('Signup token received:', response);
+      setZestToken(response);
 
     } catch (error: any) {
       const errorCode = checkIfErrorCodeRetured(error);

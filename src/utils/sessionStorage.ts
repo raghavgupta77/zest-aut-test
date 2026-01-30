@@ -157,9 +157,9 @@ export const setZestToken = async (token: object): Promise<void> => {
     console.log('token', token)
     const tokenURL = `access_token=${tokenObj.access_token}&token_type=${tokenObj.token_type}&expires_in=${tokenObj.expires_in}`
 
-    const encryptedToken = await encryptToken(tokenURL, 'secret');
+    const encryptedToken = await encryptToken(tokenURL);
     console.log('encryptedToken', encryptedToken);
-    const decryptedToken = await decryptToken(encryptedToken, 'secret');
+    const decryptedToken = await decryptToken(encryptedToken);
     console.log('decryptedToken', decryptedToken);
 
     window.location.href = `http://localhost:4200/loggedinredirect?token=${encryptedToken}`;
