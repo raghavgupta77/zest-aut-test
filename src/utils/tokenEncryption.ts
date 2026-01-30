@@ -62,7 +62,7 @@ async function deriveKey(secret: string, salt: Uint8Array): Promise<CryptoKey> {
 
 
 export async function decryptToken(
-  encryptedValue: string
+  encryptedValue: string,
 ): Promise<string> {
   const combined = Uint8Array.from(atob(encryptedValue), (c) =>
     c.charCodeAt(0)
