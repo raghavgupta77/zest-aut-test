@@ -4,7 +4,7 @@
  * Matches Angular gt-button exactly from groot-ui/dist/groot-ui/p-4257e0d9.entry.js
  */
 
-import React from 'react';
+import React, { memo, useCallback } from 'react';
 import './index.css';
 
 export interface GtButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> {
@@ -16,7 +16,7 @@ export interface GtButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButto
   grootId?: string;
 }
 
-export const GtButton: React.FC<GtButtonProps> = ({
+export const GtButton: React.FC<GtButtonProps> = memo(({
   appearance = 'primary',
   bold = false,
   size = 'auto',
@@ -29,10 +29,10 @@ export const GtButton: React.FC<GtButtonProps> = ({
   type = 'button',
   ...props
 }) => {
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
     if (disabled) return;
     grootClick?.(e);
-  };
+  }, [disabled, grootClick]);
 
   // Build class names to match groot-ui exactly
   // Angular groot-ui applies: btn, {appearance}, {size}, bold (if true)
@@ -60,4 +60,4 @@ export const GtButton: React.FC<GtButtonProps> = ({
       {textContent || children}
     </button>
   );
-};
+});

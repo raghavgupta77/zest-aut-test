@@ -5,9 +5,11 @@
  */
 
 import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { GtHeader, GtInput, GtButton } from '../../groot';
 import { AuthenticationServiceExtended } from '../../../services/authenticationServiceExtended';
 import { Authentication, AuthenticationErrorMessages } from '../../../types/contracts';
+import { ROUTES } from '../../../constants/routes';
 import './index.css';
 
 export interface ForgotPasswordProps {
@@ -29,6 +31,7 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = ({
   onShowSignupWithOtp: _onShowSignupWithOtp,
   authService
 }) => {
+  const navigate = useNavigate();
   const [authentication, setAuthentication] = useState<Authentication>(new Authentication());
   const [showResetPasswordForm, setShowResetPasswordForm] = useState<boolean>(true);
   const [showSetNewPasswordForm, setShowSetNewPasswordForm] = useState<boolean>(false);
@@ -100,11 +103,13 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = ({
     }
   }, []);
 
-  // Show login screen
+  // Show login screen - use react-router-dom navigation
   const showLoginScreen = useCallback(() => {
-    window.history.replaceState({}, '', '/authentication');
+    // Call the callback if provided (for parent component notification)
     onShowLoginWithOtp?.();
-  }, [onShowLoginWithOtp]);
+    // Navigate using react-router-dom
+    navigate(ROUTES.ROOT, { replace: true });
+  }, [navigate, onShowLoginWithOtp]);
 
   return (
     <div className="forgot-password-container">

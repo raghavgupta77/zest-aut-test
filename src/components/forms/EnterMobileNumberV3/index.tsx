@@ -7,15 +7,8 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { GtHeader, GtInput, GtButton, GtModal, GtSwipe } from '../../groot';
 import { SubmitterComponent } from '../../auth/SubmitterComponent';
+import { safeParseJWT } from '../../../utils/helpers';
 import './index.css';
-
-// Declare microapps for Google Pay
-declare global {
-  interface Window {
-    microapps?: any;
-    ymConfig?: any;
-  }
-}
 
 export interface EnterMobileNumberV3Props {
   environmentType?: string;
@@ -79,25 +72,23 @@ export const EnterMobileNumberV3: React.FC<EnterMobileNumberV3Props> = ({
   const getPhoneNumber = useCallback(() => {
     if (!window.microapps) return;
     
-    window.microapps.getPhoneNumber().then((response: any) => {
-      try {
-        const payload = JSON.parse(atob(response.split('.')[1]));
-        const phoneToken: any = {};
-        Object.assign(phoneToken, payload);
-        if (phoneToken && phoneToken.phone_number_verified && phoneToken.phone_number) {
-          const phone = phoneToken.phone_number.includes('+91 ')
-            ? phoneToken.phone_number.split(' ')[1]
-            : phoneToken.phone_number;
-          if (phone.length > 1) {
-            setTimeout(() => {
-              setEnteredNumber(phone);
-              onMobileNumberUpdate?.(response);
-            }, 0);
-          }
+    window.microapps.getIdentity({ reason: 'To verify your phone number' }).then((response: { status: string; gtoken?: string }) => {
+      if (response.status !== 'SUCCESS' || !response.gtoken) return;
+      
+      const phoneToken = safeParseJWT<{ phone_number_verified?: boolean; phone_number?: string }>(response.gtoken);
+      if (phoneToken?.phone_number_verified && phoneToken.phone_number) {
+        const phone = phoneToken.phone_number.includes('+91 ')
+          ? phoneToken.phone_number.split(' ')[1]
+          : phoneToken.phone_number;
+        if (phone.length > 1) {
+          setTimeout(() => {
+            setEnteredNumber(phone);
+            onMobileNumberUpdate?.(response.gtoken);
+          }, 0);
         }
-      } catch (error) {
-        console.error('Error parsing phone number:', error);
       }
+    }).catch(() => {
+      // Phone number retrieval failed - user can enter manually
     });
   }, [onMobileNumberUpdate]);
 

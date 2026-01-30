@@ -4,8 +4,8 @@
  * Handles all HTTP requests with proper URL encoding (replaces $.param())
  */
 
-import { environment, getEnvironmentConfig } from '../config/environment';
-import { urlEncodeParams } from '../utils/helpers';
+import { environment, getEnvironmentConfig } from "../config/environment";
+import { urlEncodeParams } from "../utils/helpers";
 
 export class BackendService {
   /**
@@ -16,27 +16,28 @@ export class BackendService {
     urlEncoded: boolean,
     addTokenHeader?: string | null,
     bearerToken?: any,
-    _isBearerToken: boolean = false
+    _isBearerToken: boolean = false,
   ): HeadersInit {
     const headers: Record<string, string> = {};
 
     if (urlEncoded) {
-      headers['Content-Type'] = 'application/x-www-form-urlencoded';
+      headers["Content-Type"] = "application/x-www-form-urlencoded";
     } else {
-      headers['Content-Type'] = 'application/json';
-      headers['Accept'] = 'application/json';
+      headers["Content-Type"] = "application/json";
+      headers["Accept"] = "application/json";
     }
 
     if (addTokenHeader && addTokenHeader.length > 0) {
-      headers['token'] = addTokenHeader;
+      headers["token"] = addTokenHeader;
     }
 
     if (bearerToken) {
-      headers['Authorization'] = `${bearerToken.token_type} ${bearerToken.access_token}`;
+      headers["Authorization"] =
+        `${bearerToken.token_type} ${bearerToken.access_token}`;
     }
 
-    headers['Cache-Control'] = 'no-cache';
-    headers['Pragma'] = 'no-cache';
+    headers["Cache-Control"] = "no-cache";
+    headers["Pragma"] = "no-cache";
 
     return headers;
   }
@@ -46,7 +47,7 @@ export class BackendService {
    */
   private setHeadersOnlyContentType(): HeadersInit {
     return {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     };
   }
 
@@ -62,7 +63,7 @@ export class BackendService {
     urlEncoded: boolean,
     addTokenHeader: string | null,
     isBucket: boolean,
-    isAbsolute: boolean
+    isAbsolute: boolean,
   ): Promise<any> {
     const requestUrl = isBucket
       ? `${this.getS3Url(environmentType)}${url}`
@@ -74,33 +75,22 @@ export class BackendService {
     if (urlEncoded) {
       // Replace $.param() with URLSearchParams - same behavior
       body = urlEncodeParams(postParams);
-      console.log('[BackendService] URL-encoded body:', body);
     } else {
       body = JSON.stringify(postParams);
-      console.log('[BackendService] JSON body:', body);
     }
 
     const headers = !isAbsolute
       ? this.setHeaders(urlEncoded, addTokenHeader)
       : this.setHeadersOnlyContentType();
 
-    console.log('[BackendService] POST request:', {
-      url: requestUrl,
-      headers: Object.fromEntries(Object.entries(headers)),
-      bodyPreview: body.substring(0, 200)
-    });
-
     const response = await fetch(requestUrl, {
-      method: 'POST',
+      method: "POST",
       headers,
-      body
+      body,
     });
-
-    console.log('[BackendService] Response status:', response.status);
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('[BackendService] Error response:', errorText);
 
       // Parse error response to match Angular's HttpErrorResponse.error structure
       let errorBody: any = null;
@@ -112,7 +102,9 @@ export class BackendService {
 
       // Create error object matching Angular's HttpErrorResponse structure
       // This is critical for checkIfErrorCodeRetured() to work correctly
-      const httpError: any = new Error(`HTTP error! status: ${response.status}`);
+      const httpError: any = new Error(
+        `HTTP error! status: ${response.status}`,
+      );
       httpError.status = response.status;
       httpError.error = errorBody; // This matches Angular's HttpErrorResponse.error
       throw httpError;
@@ -130,7 +122,7 @@ export class BackendService {
     postParams: any = {},
     urlEncoded: boolean,
     addTokenHeader: string | null,
-    isBucket: boolean
+    isBucket: boolean,
   ): Promise<any> {
     const requestUrl = isBucket
       ? `${this.getS3Url(environmentType)}${url}`
@@ -144,9 +136,9 @@ export class BackendService {
     }
 
     const response = await fetch(requestUrl, {
-      method: 'PUT',
+      method: "PUT",
       headers: this.setHeaders(urlEncoded, addTokenHeader),
-      body
+      body,
     });
 
     if (!response.ok) {
@@ -157,7 +149,9 @@ export class BackendService {
       } catch {
         errorBody = { message: errorText };
       }
-      const httpError: any = new Error(`HTTP error! status: ${response.status}`);
+      const httpError: any = new Error(
+        `HTTP error! status: ${response.status}`,
+      );
       httpError.status = response.status;
       httpError.error = errorBody;
       throw httpError;
@@ -175,7 +169,7 @@ export class BackendService {
     postParams: any = {},
     urlEncoded: boolean,
     addTokenHeader: any,
-    isBucket: boolean
+    isBucket: boolean,
   ): Promise<any> {
     const requestUrl = isBucket
       ? `${this.getS3Url(environmentType)}${url}`
@@ -189,9 +183,9 @@ export class BackendService {
     }
 
     const response = await fetch(requestUrl, {
-      method: 'PUT',
+      method: "PUT",
       headers: this.setHeaders(urlEncoded, null, addTokenHeader, true),
-      body
+      body,
     });
 
     if (!response.ok) {
@@ -202,7 +196,9 @@ export class BackendService {
       } catch {
         errorBody = { message: errorText };
       }
-      const httpError: any = new Error(`HTTP error! status: ${response.status}`);
+      const httpError: any = new Error(
+        `HTTP error! status: ${response.status}`,
+      );
       httpError.status = response.status;
       httpError.error = errorBody;
       throw httpError;
@@ -216,18 +212,18 @@ export class BackendService {
    */
   async getData(
     environmentType: string,
-    url: string = '',
+    url: string = "",
     urlEncoded: boolean,
     addTokenHeader: string | null,
-    isBucket: boolean
+    isBucket: boolean,
   ): Promise<any> {
     const requestUrl = isBucket
       ? `${this.getS3Url(environmentType)}${url}`
       : `${this.getBaseUrl(environmentType)}${url}`;
 
     const response = await fetch(requestUrl, {
-      method: 'GET',
-      headers: this.setHeaders(urlEncoded, addTokenHeader)
+      method: "GET",
+      headers: this.setHeaders(urlEncoded, addTokenHeader),
     });
 
     if (!response.ok) {
@@ -238,7 +234,9 @@ export class BackendService {
       } catch {
         errorBody = { message: errorText };
       }
-      const httpError: any = new Error(`HTTP error! status: ${response.status}`);
+      const httpError: any = new Error(
+        `HTTP error! status: ${response.status}`,
+      );
       httpError.status = response.status;
       httpError.error = errorBody;
       throw httpError;

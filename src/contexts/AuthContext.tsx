@@ -3,9 +3,15 @@
  * Provides centralized authentication state management with React Context
  */
 
-import { createContext, useContext, useReducer, useEffect, useCallback } from 'react';
-import type { ReactNode } from 'react';
-import type { User, AuthToken, AuthCredentials } from '../types';
+import {
+  createContext,
+  useContext,
+  useReducer,
+  useEffect,
+  useCallback,
+} from "react";
+import type { ReactNode } from "react";
+import type { User, AuthToken, AuthCredentials } from "../types";
 
 // Authentication state interface
 export interface AuthState {
@@ -18,12 +24,12 @@ export interface AuthState {
 
 // Authentication actions
 type AuthAction =
-  | { type: 'AUTH_START' }
-  | { type: 'AUTH_SUCCESS'; payload: { user: User; token: AuthToken } }
-  | { type: 'AUTH_FAILURE'; payload: { error: string } }
-  | { type: 'AUTH_LOGOUT' }
-  | { type: 'AUTH_CLEAR_ERROR' }
-  | { type: 'AUTH_RESTORE'; payload: { user: User; token: AuthToken } };
+  | { type: "AUTH_START" }
+  | { type: "AUTH_SUCCESS"; payload: { user: User; token: AuthToken } }
+  | { type: "AUTH_FAILURE"; payload: { error: string } }
+  | { type: "AUTH_LOGOUT" }
+  | { type: "AUTH_CLEAR_ERROR" }
+  | { type: "AUTH_RESTORE"; payload: { user: User; token: AuthToken } };
 
 // Authentication context interface
 interface AuthContextType {
@@ -46,14 +52,14 @@ const initialState: AuthState = {
 // Authentication reducer
 function authReducer(state: AuthState, action: AuthAction): AuthState {
   switch (action.type) {
-    case 'AUTH_START':
+    case "AUTH_START":
       return {
         ...state,
         isLoading: true,
         error: null,
       };
 
-    case 'AUTH_SUCCESS':
+    case "AUTH_SUCCESS":
       return {
         ...state,
         user: action.payload.user,
@@ -63,7 +69,7 @@ function authReducer(state: AuthState, action: AuthAction): AuthState {
         error: null,
       };
 
-    case 'AUTH_FAILURE':
+    case "AUTH_FAILURE":
       return {
         ...state,
         user: null,
@@ -73,18 +79,18 @@ function authReducer(state: AuthState, action: AuthAction): AuthState {
         error: action.payload.error,
       };
 
-    case 'AUTH_LOGOUT':
+    case "AUTH_LOGOUT":
       return {
         ...initialState,
       };
 
-    case 'AUTH_CLEAR_ERROR':
+    case "AUTH_CLEAR_ERROR":
       return {
         ...state,
         error: null,
       };
 
-    case 'AUTH_RESTORE':
+    case "AUTH_RESTORE":
       return {
         ...state,
         user: action.payload.user,
@@ -101,27 +107,30 @@ function authReducer(state: AuthState, action: AuthAction): AuthState {
 
 // State persistence utilities
 class StatePersistence {
-  private readonly AUTH_STATE_KEY = 'auth_state';
-  private readonly STATE_VERSION = '1.0';
+  private readonly AUTH_STATE_KEY = "auth_state";
+  private readonly STATE_VERSION = "1.0";
 
   saveAuthState(user: User | null, token: AuthToken | null): void {
     const state = {
       user,
       token,
       version: this.STATE_VERSION,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     };
-    
+
     try {
-      localStorage.setItem(this.AUTH_STATE_KEY, JSON.stringify(state, (_key, value) => {
-        // Handle Date serialization
-        if (value instanceof Date) {
-          return { __type: 'Date', value: value.toISOString() };
-        }
-        return value;
-      }));
+      localStorage.setItem(
+        this.AUTH_STATE_KEY,
+        JSON.stringify(state, (_key, value) => {
+          // Handle Date serialization
+          if (value instanceof Date) {
+            return { __type: "Date", value: value.toISOString() };
+          }
+          return value;
+        }),
+      );
     } catch (error) {
-      console.warn('Failed to save auth state:', error);
+      console.warn("Failed to save auth state:", error);
     }
   }
 
@@ -134,12 +143,12 @@ class StatePersistence {
 
       const state = JSON.parse(stored, (_key, value) => {
         // Handle Date deserialization
-        if (value && typeof value === 'object' && value.__type === 'Date') {
+        if (value && typeof value === "object" && value.__type === "Date") {
           return new Date(value.value);
         }
         return value;
       });
-      
+
       // Validate state version and structure
       if (state.version !== this.STATE_VERSION) {
         this.clearAuthState();
@@ -155,10 +164,10 @@ class StatePersistence {
 
       return {
         user: state.user,
-        token: state.token
+        token: state.token,
       };
     } catch (error) {
-      console.warn('Failed to load auth state:', error);
+      console.warn("Failed to load auth state:", error);
       this.clearAuthState();
       return { user: null, token: null };
     }
@@ -173,32 +182,38 @@ class StatePersistence {
 class SensitiveDataCleanup {
   clearSensitiveData(): void {
     // Clear localStorage auth data
-    localStorage.removeItem('auth_state');
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('refresh_token');
-    localStorage.removeItem('user_session');
-    
+    localStorage.removeItem("auth_state");
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+    localStorage.removeItem("user_session");
+
     // Clear sessionStorage auth data
-    sessionStorage.removeItem('auth_state');
-    sessionStorage.removeItem('access_token');
-    sessionStorage.removeItem('refresh_token');
-    sessionStorage.removeItem('user_session');
-    
+    sessionStorage.removeItem("auth_state");
+    sessionStorage.removeItem("access_token");
+    sessionStorage.removeItem("refresh_token");
+    sessionStorage.removeItem("user_session");
+
     // Clear any other sensitive data patterns
-    const sensitivePatterns = ['token', 'auth', 'user', 'session'];
-    
+    const sensitivePatterns = ["token", "auth", "user", "session"];
+
     // Clear localStorage
     for (let i = localStorage.length - 1; i >= 0; i--) {
       const key = localStorage.key(i);
-      if (key && sensitivePatterns.some(pattern => key.toLowerCase().includes(pattern))) {
+      if (
+        key &&
+        sensitivePatterns.some((pattern) => key.toLowerCase().includes(pattern))
+      ) {
         localStorage.removeItem(key);
       }
     }
-    
+
     // Clear sessionStorage
     for (let i = sessionStorage.length - 1; i >= 0; i--) {
       const key = sessionStorage.key(i);
-      if (key && sensitivePatterns.some(pattern => key.toLowerCase().includes(pattern))) {
+      if (
+        key &&
+        sensitivePatterns.some((pattern) => key.toLowerCase().includes(pattern))
+      ) {
         sessionStorage.removeItem(key);
       }
     }
@@ -207,12 +222,16 @@ class SensitiveDataCleanup {
 
 // State change notification utilities
 class StateChangeNotification {
-  private listeners: Set<(newState: AuthState, previousState: AuthState) => void> = new Set();
+  private listeners: Set<
+    (newState: AuthState, previousState: AuthState) => void
+  > = new Set();
   private currentState: AuthState = initialState;
 
-  subscribe(listener: (newState: AuthState, previousState: AuthState) => void): () => void {
+  subscribe(
+    listener: (newState: AuthState, previousState: AuthState) => void,
+  ): () => void {
     this.listeners.add(listener);
-    
+
     return () => {
       this.listeners.delete(listener);
     };
@@ -222,11 +241,11 @@ class StateChangeNotification {
     const previousState = { ...this.currentState };
     this.currentState = { ...newState };
 
-    this.listeners.forEach(listener => {
+    this.listeners.forEach((listener) => {
       try {
         listener({ ...newState }, previousState);
       } catch (error) {
-        console.warn('State change listener error:', error);
+        console.warn("State change listener error:", error);
       }
     });
   }
@@ -234,14 +253,19 @@ class StateChangeNotification {
 
 // Concurrent authentication handler
 class ConcurrentAuthenticationHandler {
-  private pendingAuthentications: Map<string, Promise<{ user: User; token: AuthToken }>> = new Map();
+  private pendingAuthentications: Map<
+    string,
+    Promise<{ user: User; token: AuthToken }>
+  > = new Map();
 
   async authenticate(
     credentials: AuthCredentials,
-    authFunction: (creds: AuthCredentials) => Promise<{ user: User; token: AuthToken }>
+    authFunction: (
+      creds: AuthCredentials,
+    ) => Promise<{ user: User; token: AuthToken }>,
   ): Promise<{ user: User; token: AuthToken }> {
     const key = this.getCredentialsKey(credentials);
-    
+
     // Cancel existing authentication for same credentials
     if (this.pendingAuthentications.has(key)) {
       this.pendingAuthentications.delete(key);
@@ -262,13 +286,13 @@ class ConcurrentAuthenticationHandler {
 
   private getCredentialsKey(credentials: AuthCredentials): string {
     switch (credentials.type) {
-      case 'email':
+      case "email":
         return `email:${credentials.email}`;
-      case 'phone':
+      case "phone":
         return `phone:${credentials.phoneNumber}`;
-      case 'google':
+      case "google":
         return `google:${credentials.externalToken}`;
-      case 'truecaller':
+      case "truecaller":
         return `truecaller:${credentials.externalToken}`;
       default:
         return `unknown:${JSON.stringify(credentials)}`;
@@ -298,7 +322,7 @@ interface AuthProviderProps {
 // Authentication provider component
 export function AuthProvider({ children }: AuthProviderProps) {
   const [state, dispatch] = useReducer(authReducer, initialState);
-  
+
   // Utilities
   const statePersistence = new StatePersistence();
   const dataCleanup = new SensitiveDataCleanup();
@@ -306,78 +330,88 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const concurrentHandler = new ConcurrentAuthenticationHandler();
 
   // Mock authentication function (replace with actual API calls)
-  const authenticateUser = async (credentials: AuthCredentials): Promise<{ user: User; token: AuthToken }> => {
+  const authenticateUser = async (
+    credentials: AuthCredentials,
+  ): Promise<{ user: User; token: AuthToken }> => {
     // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
     // Mock authentication logic
-    if (credentials.type === 'email' && credentials.email && credentials.password) {
+    if (
+      credentials.type === "email" &&
+      credentials.email &&
+      credentials.password
+    ) {
       return {
         user: {
           id: `user_${Date.now()}`,
           email: credentials.email,
           isVerified: true,
           createdAt: new Date(),
-          lastLoginAt: new Date()
+          lastLoginAt: new Date(),
         },
         token: {
           accessToken: `token_${Date.now()}`,
           refreshToken: `refresh_${Date.now()}`,
-          tokenType: 'Bearer',
+          tokenType: "Bearer",
           expiresIn: 3600,
-          scope: 'read write'
-        }
+          scope: "read write",
+        },
       };
     }
-    
-    throw new Error('Invalid credentials');
+
+    throw new Error("Invalid credentials");
   };
 
   // Login function
   const login = useCallback(async (credentials: AuthCredentials) => {
-    dispatch({ type: 'AUTH_START' });
-    
+    dispatch({ type: "AUTH_START" });
+
     try {
-      const result = await concurrentHandler.authenticate(credentials, authenticateUser);
-      
-      dispatch({ 
-        type: 'AUTH_SUCCESS', 
-        payload: { user: result.user, token: result.token } 
+      const result = await concurrentHandler.authenticate(
+        credentials,
+        authenticateUser,
+      );
+
+      dispatch({
+        type: "AUTH_SUCCESS",
+        payload: { user: result.user, token: result.token },
       });
-      
+
       // Persist state
       statePersistence.saveAuthState(result.user, result.token);
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Authentication failed';
-      dispatch({ type: 'AUTH_FAILURE', payload: { error: errorMessage } });
+      const errorMessage =
+        error instanceof Error ? error.message : "Authentication failed";
+      dispatch({ type: "AUTH_FAILURE", payload: { error: errorMessage } });
     }
   }, []);
 
   // Logout function
   const logout = useCallback(() => {
-    dispatch({ type: 'AUTH_LOGOUT' });
-    
+    dispatch({ type: "AUTH_LOGOUT" });
+
     // Clear persisted state
     statePersistence.clearAuthState();
-    
+
     // Clear sensitive data
     dataCleanup.clearSensitiveData();
-    
+
     // Cancel pending authentications
     concurrentHandler.cancelPendingAuthentication();
   }, []);
 
   // Clear error function
   const clearError = useCallback(() => {
-    dispatch({ type: 'AUTH_CLEAR_ERROR' });
+    dispatch({ type: "AUTH_CLEAR_ERROR" });
   }, []);
 
   // Refresh authentication function
   const refreshAuth = useCallback(async () => {
     const { user, token } = statePersistence.loadAuthState();
-    
+
     if (user && token) {
-      dispatch({ type: 'AUTH_RESTORE', payload: { user, token } });
+      dispatch({ type: "AUTH_RESTORE", payload: { user, token } });
     }
   }, []);
 
@@ -400,22 +434,25 @@ export function AuthProvider({ children }: AuthProviderProps) {
   };
 
   return (
-    <AuthContext.Provider value={contextValue}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
 }
 
 // Custom hook to use auth context
 export function useAuth(): AuthContextType {
   const context = useContext(AuthContext);
-  
+
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
-  
+
   return context;
 }
 
 // Export utilities for testing
-export { StatePersistence, SensitiveDataCleanup, StateChangeNotification, ConcurrentAuthenticationHandler };
+export {
+  StatePersistence,
+  SensitiveDataCleanup,
+  StateChangeNotification,
+  ConcurrentAuthenticationHandler,
+};

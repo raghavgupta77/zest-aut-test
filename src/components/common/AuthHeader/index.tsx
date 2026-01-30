@@ -4,16 +4,16 @@
  * Controlled by HeaderService
  */
 
-import React, { useState, useEffect } from 'react';
-import { HeaderService, Header } from '../../../services/headerService';
-import './index.css';
+import React, { useState, useEffect } from "react";
+import { HeaderService, Header } from "../../../services/headerService";
+import "./index.css";
 
 export interface AuthHeaderProps {
   onBackButtonClicked?: () => void;
 }
 
 export const AuthHeader: React.FC<AuthHeaderProps> = ({
-  onBackButtonClicked
+  onBackButtonClicked,
 }) => {
   const [showHeader, setShowHeader] = useState<boolean>(false);
   const [showBackButton, setShowBackButton] = useState<boolean>(false);
@@ -34,28 +34,28 @@ export const AuthHeader: React.FC<AuthHeaderProps> = ({
   if (!showHeader) return null;
 
   return (
-    <nav className="auth-nav">
+    <nav className="auth-nav" aria-label="Authentication navigation">
       <div className="auth-nav-wrapper auth-page-container container">
         <div className="auth-page-container container">
           {showBackButton && (
-            <a
+            <button
+              type="button"
               className="back-arrow"
-              href="javascript:void(0);"
-              onClick={(e) => {
-                e.preventDefault();
-                goBack();
-              }}
+              onClick={goBack}
+              aria-label="Go back"
             >
-              <i className="material-icons">arrow_back</i>
-            </a>
+              <i className="material-icons" aria-hidden="true">
+                arrow_back
+              </i>
+            </button>
           )}
-          <a href="javascript:void(0);" className="brand-logo auth-brand-logo center">
+          <div className="brand-logo auth-brand-logo center">
             <img
               className="responsive-img auth-logo-image"
               src="/src/assets/images/authentication/logo.svg"
-              alt="ZestMoney"
+              alt="ZestMoney logo"
             />
-          </a>
+          </div>
         </div>
       </div>
     </nav>

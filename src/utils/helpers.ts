@@ -193,3 +193,41 @@ export const autoCorrectEmail = (email: string): string => {
   const emailParts = email.split('@');
   return `${emailParts[0]}@gmail.com`;
 };
+
+/**
+ * Safely parse JWT token payload
+ * Returns null if parsing fails instead of throwing
+ */
+export const safeParseJWT = <T = Record<string, unknown>>(token: string): T | null => {
+  try {
+    if (!token || typeof token !== 'string') {
+      return null;
+    }
+    const parts = token.split('.');
+    if (parts.length !== 3) {
+      return null;
+    }
+    const payload = atob(parts[1]);
+    return JSON.parse(payload) as T;
+  } catch {
+    return null;
+  }
+};
+
+/**
+ * Safely parse JWT from access_token response
+ * Handles the common pattern of response.access_token
+ */
+export const safeParseAccessToken = <T = Record<string, unknown>>(
+  response: { access_token?: string } | string
+): T | null => {
+  try {
+    const token = typeof response === 'string' ? response : response?.access_token;
+    if (!token) {
+      return null;
+    }
+    return safeParseJWT<T>(token);
+  } catch {
+    return null;
+  }
+};

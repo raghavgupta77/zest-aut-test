@@ -4,22 +4,45 @@
  * Matches Angular gt-modal exactly: bottom sheet on mobile, centered on desktop
  */
 
-import React, { useEffect } from 'react';
-import './index.css';
+import React, { useEffect } from "react";
+import "./index.css";
 
 // Close icon SVG (exact match for groot-ui closeIcon.svg - X inside circle)
 const CloseIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M9.88552 6.1143L6.11426 9.88496" stroke="#1A1A1A" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M6.11426 6.1143L9.88552 9.88496" stroke="#1A1A1A" strokeLinecap="round" strokeLinejoin="round"/>
-    <path fillRule="evenodd" clipRule="evenodd" d="M8.00016 14.6667C11.6821 14.6667 14.6668 11.6819 14.6668 8C14.6668 4.3181 11.6821 1.33334 8.00016 1.33334C4.31826 1.33334 1.3335 4.3181 1.3335 8C1.3335 11.6819 4.31826 14.6667 8.00016 14.6667Z" stroke="#1A1A1A" strokeLinecap="round" strokeLinejoin="round"/>
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M9.88552 6.1143L6.11426 9.88496"
+      stroke="#1A1A1A"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M6.11426 6.1143L9.88552 9.88496"
+      stroke="#1A1A1A"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M8.00016 14.6667C11.6821 14.6667 14.6668 11.6819 14.6668 8C14.6668 4.3181 11.6821 1.33334 8.00016 1.33334C4.31826 1.33334 1.3335 4.3181 1.3335 8C1.3335 11.6819 4.31826 14.6667 8.00016 14.6667Z"
+      stroke="#1A1A1A"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   </svg>
 );
 
 export interface GtModalProps {
   open: boolean;
   grootClose?: () => void;
-  appearance?: 'primary' | 'secondary' | 'floating';
+  appearance?: "primary" | "secondary" | "floating";
   hideCloseButton?: boolean;
   className?: string;
   grootId?: string;
@@ -31,23 +54,23 @@ export interface GtModalProps {
 export const GtModal: React.FC<GtModalProps> = ({
   open,
   grootClose,
-  appearance = 'primary',
+  appearance = "primary",
   hideCloseButton = false,
-  className = '',
+  className = "",
   grootId,
   modalCustomStyles,
   children,
-  header
+  header,
 }) => {
   // Handle body overflow
   useEffect(() => {
     if (open) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     }
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     };
   }, [open]);
 
@@ -72,34 +95,35 @@ export const GtModal: React.FC<GtModalProps> = ({
   // Handle escape key
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && open) {
+      if (e.key === "Escape" && open) {
         grootClose?.();
       }
     };
 
     if (open) {
-      document.addEventListener('keydown', handleEscape);
+      document.addEventListener("keydown", handleEscape);
       return () => {
-        document.removeEventListener('keydown', handleEscape);
+        document.removeEventListener("keydown", handleEscape);
       };
     }
   }, [open, grootClose]);
 
   // Modal container classes
   const modalContainerClasses = [
-    'modal-container',
-    open ? 'isopen' : '',
-    className
-  ].filter(Boolean).join(' ');
+    "modal-container",
+    open ? "isopen" : "",
+    className,
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   // Modal content classes
-  const modalContentClasses = [
-    'modal-content',
-    appearance
-  ].filter(Boolean).join(' ');
+  const modalContentClasses = ["modal-content", appearance]
+    .filter(Boolean)
+    .join(" ");
 
   // Swipe indicator only for primary appearance
-  const showSwipeIndicator = appearance === 'primary';
+  const showSwipeIndicator = appearance === "primary";
 
   return (
     <div
@@ -121,21 +145,19 @@ export const GtModal: React.FC<GtModalProps> = ({
       >
         {/* Close button */}
         {!hideCloseButton && (
-          <div
+          <button
+            type="button"
             className="closeIcon"
             id={grootId ? `${grootId}-close-cta` : undefined}
             onClick={handleClose}
+            aria-label="Close modal"
           >
             <CloseIcon />
-          </div>
+          </button>
         )}
 
         {/* Header slot */}
-        {header && (
-          <div className="header">
-            {header}
-          </div>
-        )}
+        {header && <div className="header">{header}</div>}
 
         {/* Content */}
         {children}

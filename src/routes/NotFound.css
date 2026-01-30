@@ -1,0 +1,131 @@
+/**
+ * NotFound (404) Page Styles
+ */
+
+.not-found-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+}
+
+.not-found-content {
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  padding: 40px 32px;
+  background: var(--white-color, #ffffff);
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+}
+
+/* Illustration */
+.not-found-illustration {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.error-code {
+  font-size: 120px;
+  font-weight: 800;
+  color: var(--theme-color, #1eba68);
+  opacity: 0.2;
+  line-height: 1;
+  letter-spacing: -4px;
+  font-family: var(--gt-title-font-family, 'Geomanist', sans-serif);
+  margin: 0;
+}
+
+.not-found-icon {
+  width: 64px;
+  height: 64px;
+  color: var(--theme-color, #1eba68);
+}
+
+/* Content */
+.not-found-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--header-color, #1c465d);
+  margin: 0 0 12px 0;
+  font-family: var(--gt-title-font-family, 'Geomanist', sans-serif);
+}
+
+.not-found-description {
+  font-size: 15px;
+  color: var(--text-grey-color, #4a4a4a);
+  line-height: 1.6;
+  margin: 0 0 32px 0;
+}
+
+/* Button */
+.not-found-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px 24px;
+  background: var(--theme-color, #1eba68);
+  color: var(--white-color, #ffffff);
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.not-found-button:hover {
+  background: #17a85d;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(30, 186, 104, 0.3);
+}
+
+.not-found-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(30, 186, 104, 0.3);
+}
+
+.not-found-button:active {
+  transform: translateY(0);
+}
+
+.button-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .not-found-container {
+    padding: 16px;
+  }
+
+  .not-found-content {
+    padding: 32px 24px;
+  }
+
+  .error-code {
+    font-size: 80px;
+  }
+
+  .not-found-icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .not-found-title {
+    font-size: 20px;
+  }
+
+  .not-found-description {
+    font-size: 14px;
+  }
+}

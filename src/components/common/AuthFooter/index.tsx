@@ -4,9 +4,9 @@
  * Controlled by FooterService
  */
 
-import React, { useState, useEffect } from 'react';
-import { FooterService, Footer } from '../../../services/footerService';
-import './index.css';
+import React, { useState, useEffect } from "react";
+import { FooterService, Footer } from "../../../services/footerService";
+import "./index.css";
 
 export const AuthFooter: React.FC = () => {
   const [showFooter, setShowFooter] = useState<boolean>(false);

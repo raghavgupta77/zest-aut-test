@@ -4,7 +4,7 @@
  * Matches Angular gt-input exactly from groot-ui/dist/groot-ui/p-4257e0d9.entry.js
  */
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useId, memo } from 'react';
 import './index.css';
 
 export interface GtInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'onBlur' | 'prefix'> {
@@ -21,7 +21,7 @@ export interface GtInputProps extends Omit<React.InputHTMLAttributes<HTMLInputEl
   grootId?: string;
 }
 
-export const GtInput: React.FC<GtInputProps> = ({
+export const GtInput: React.FC<GtInputProps> = memo(({
   label,
   errMsg,
   helpMsg,
@@ -39,6 +39,7 @@ export const GtInput: React.FC<GtInputProps> = ({
   ...props
 }) => {
   const [, setIsFocused] = useState(false);
+  const generatedId = useId();
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     valueChange?.(e.target.value);
@@ -55,7 +56,7 @@ export const GtInput: React.FC<GtInputProps> = ({
     props.onFocus?.(e);
   }, [grootFocus, props]);
 
-  const inputId = grootId || id || `gt-input-${Math.random().toString(36).substr(2, 9)}`;
+  const inputId = grootId || id || generatedId;
   const prefixContent = prefix || children;
   
   // Build input class names to match groot-ui exactly
@@ -113,4 +114,4 @@ export const GtInput: React.FC<GtInputProps> = ({
       )}
     </div>
   );
-};
+});

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState, useCallback } from 'react';
 
 export interface ToastProps {
   id: string;
@@ -8,7 +8,7 @@ export interface ToastProps {
   onClose: (id: string) => void;
 }
 
-export const Toast: React.FC<ToastProps> = ({
+export const Toast: React.FC<ToastProps> = memo(({
   id,
   message,
   type = 'info',
@@ -110,7 +110,7 @@ export const Toast: React.FC<ToastProps> = ({
       </div>
     </div>
   );
-};
+});
 
 // Toast Container Component
 export interface ToastContainerProps {

@@ -121,7 +121,7 @@ export const EnterOtpV3: React.FC<EnterOtpV3Props> = ({
     if (state) {
       // Modal opened - reset state
       setShowContinueLoader(false);
-      setOtp('');
+      setOtp("");
       setDisabledCTA(true);
     } else {
       // Modal closed - reset loader immediately
@@ -195,7 +195,9 @@ export const EnterOtpV3: React.FC<EnterOtpV3Props> = ({
                   size="block"
                   type="submit"
                   disabled={!hasOtpCallFinished || disabledCTA}
-                  textContent={showContinueLoader && !errorMessage ? "" : "Continue"}
+                  textContent={
+                    showContinueLoader && !errorMessage ? "" : "Continue"
+                  }
                 />
                 {/* Loading Overlay - Inside submit-btn-wrapper to cover only the button */}
                 {showContinueLoader && !errorMessage && (

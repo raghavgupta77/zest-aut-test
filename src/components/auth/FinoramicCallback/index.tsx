@@ -15,7 +15,7 @@ import {
   EventDetails,
   UserDetails
 } from '../../../types/contracts';
-import { isEmail } from '../../../utils/helpers';
+import { isEmail, safeParseAccessToken } from '../../../utils/helpers';
 import {
   getAuthenticationSession,
   removeAuthenticationSession,
@@ -166,21 +166,23 @@ export const FinoramicCallback: React.FC<FinoramicCallbackProps> = ({
 
       // Post consent if not Google Pay
       if (!isGpay && response.access_token) {
-        try {
-          const tokenPayload = JSON.parse(atob(response.access_token.split('.')[1]));
-          const consentObj = {
-            consents: [
-              {
-                dataSharingConsent: {
-                  isAccepted: true,
-                  source: 'signup'
+        const tokenPayload = safeParseAccessToken<{ sub?: string }>(response);
+        if (tokenPayload?.sub) {
+          try {
+            const consentObj = {
+              consents: [
+                {
+                  dataSharingConsent: {
+                    isAccepted: true,
+                    source: 'signup'
+                  }
                 }
-              }
-            ]
-          };
-          authService.postConsent(environment, tokenPayload.sub, response, consentObj);
-        } catch (e) {
-          console.error('Error posting consent:', e);
+              ]
+            };
+            authService.postConsent(environment, tokenPayload.sub, response, consentObj);
+          } catch {
+            // Consent posting failed - non-critical error
+          }
         }
       }
 

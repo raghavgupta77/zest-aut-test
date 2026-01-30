@@ -4,6 +4,8 @@
  * Provides all environment-specific configuration for API calls
  */
 
+import { ROUTES } from '../constants/routes';
+
 export interface EnvironmentConfig {
   baseUrl: string;
   baseAppUrl: string;
@@ -60,7 +62,7 @@ export const environment: Environment = {
     finoramicDomain: 'https://sandbox.finoramic.com',
     finoramicClientId: 'ae717c9e-5b4f-4a54-99c5-ec26e1937b82',
     finoramicClient: 'zestmoney',
-    finoramicCallback: '/authentication/finoramic-callback',
+    finoramicCallback: ROUTES.FINORAMIC_CALLBACK,
     featuresApiKey: '14FTv6F6dj94qA3AiTGyEacUKbQRCj0gZT3C0TKe',
     featureSwitchUrl: 'https://staging-features.zestmoney.in',
     scripts: {
@@ -84,7 +86,7 @@ export const environment: Environment = {
     finoramicDomain: 'https://sandbox.finoramic.com',
     finoramicClientId: 'sandbox1-12c3-4c5c-9b80-cbf73aec05b6',
     finoramicClient: 'zestmoney-qat',
-    finoramicCallback: '/authentication/finoramic-callback',
+    finoramicCallback: ROUTES.FINORAMIC_CALLBACK,
     featuresApiKey: '14FTv6F6dj94qA3AiTGyEacUKbQRCj0gZT3C0TKe',
     featureSwitchUrl: 'https://staging-features.zestmoney.in',
     scripts: {
@@ -108,7 +110,7 @@ export const environment: Environment = {
     finoramicDomain: 'https://www.finoramic.com',
     finoramicClientId: '6cc8c2df-a347-44a6-9522-245342444ed4',
     finoramicClient: 'zestmoney',
-    finoramicCallback: '/authentication/finoramic-callback',
+    finoramicCallback: ROUTES.FINORAMIC_CALLBACK,
     featuresApiKey: 'cSRJSgt7nzaYsV4tBwrTuaIUZNei3YBg7fJ4ei5e',
     featureSwitchUrl: 'https://features.zestmoney.in',
     scripts: {
@@ -131,7 +133,7 @@ export const environment: Environment = {
     finoramicDomain: 'https://sandbox.finoramic.com',
     finoramicClientId: 'ae717c9e-5b4f-4a54-99c5-ec26e1937b82',
     finoramicClient: 'zestmoney',
-    finoramicCallback: '/authentication/finoramic-callback',
+    finoramicCallback: ROUTES.FINORAMIC_CALLBACK,
     featuresApiKey: '14FTv6F6dj94qA3AiTGyEacUKbQRCj0gZT3C0TKe',
     featureSwitchUrl: 'https://staging-features.zestmoney.in',
     scripts: {
@@ -155,7 +157,7 @@ export const environment: Environment = {
     finoramicDomain: 'https://sandbox.finoramic.com',
     finoramicClientId: 'ae717c9e-5b4f-4a54-99c5-ec26e1937b82',
     finoramicClient: 'zestmoney',
-    finoramicCallback: '/authentication/finoramic-callback',
+    finoramicCallback: ROUTES.FINORAMIC_CALLBACK,
     featuresApiKey: '14FTv6F6dj94qA3AiTGyEacUKbQRCj0gZT3C0TKe',
     featureSwitchUrl: 'https://staging-features.zestmoney.in',
     scripts: {
@@ -178,7 +180,7 @@ export const environment: Environment = {
     finoramicDomain: 'https://sandbox.finoramic.com',
     finoramicClientId: 'ae717c9e-5b4f-4a54-99c5-ec26e1937b82',
     finoramicClient: 'zestmoney',
-    finoramicCallback: '/authentication/finoramic-callback',
+    finoramicCallback: ROUTES.FINORAMIC_CALLBACK,
     featuresApiKey: '14FTv6F6dj94qA3AiTGyEacUKbQRCj0gZT3C0TKe',
     featureSwitchUrl: 'https://staging-features.zestmoney.in',
     scripts: {
@@ -202,7 +204,7 @@ export const environment: Environment = {
     finoramicDomain: 'https://sandbox.finoramic.com',
     finoramicClientId: 'ae717c9e-5b4f-4a54-99c5-ec26e1937b82',
     finoramicClient: 'zestmoney',
-    finoramicCallback: '/authentication/finoramic-callback',
+    finoramicCallback: ROUTES.FINORAMIC_CALLBACK,
     featuresApiKey: '14FTv6F6dj94qA3AiTGyEacUKbQRCj0gZT3C0TKe',
     featureSwitchUrl: 'https://staging-features.zestmoney.in',
     scripts: {

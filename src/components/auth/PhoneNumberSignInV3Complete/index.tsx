@@ -6,6 +6,7 @@
 
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { ROUTES } from "../../../constants/routes";
 import { EnterMobileNumberV3 } from "../../forms/EnterMobileNumberV3";
 import { EnterOtpV3 } from "../../forms/EnterOtpV3";
 import { EnterEmailV3 } from "../../forms/EnterEmailV3";
@@ -34,6 +35,8 @@ import {
   mobileCheck,
   checkIfErrorCodeRetured,
   checkIfErrorCodeReturedFromGoogle,
+  safeParseAccessToken,
+  safeParseJWT,
 } from "../../../utils/helpers";
 import type { AuthenticationSessionStorageProperties } from "../../../utils/helpers";
 import {
@@ -301,30 +304,28 @@ export const PhoneNumberSignInV3Complete: React.FC<
 
     // Case 1: State changed (app logic triggered it) - update URL
     if (showEmailOptions !== prevShowEmailOptions) {
-      if (showEmailOptions && location.pathname !== "/email") {
-        navigate("/email", { replace: false });
-      } else if (!showEmailOptions && location.pathname === "/email") {
-        navigate("/", { replace: false });
+      if (showEmailOptions && location.pathname !== ROUTES.EMAIL) {
+        navigate(ROUTES.EMAIL, { replace: false });
+      } else if (!showEmailOptions && location.pathname === ROUTES.EMAIL) {
+        navigate(ROUTES.ROOT, { replace: false });
       }
       return; // Don't process URL change in the same cycle
     }
 
     // Case 2: URL changed (browser back/forward) - update state
     if (location.pathname !== prevPathname) {
-      if (location.pathname === "/email" && !showEmailOptions) {
+      if (location.pathname === ROUTES.EMAIL && !showEmailOptions) {
         if (isValidAuthSessionStorage()) {
           setShowEmailOptions(true);
         }
       } else if (
-        (location.pathname === "/" || location.pathname === "") &&
+        (location.pathname === ROUTES.ROOT || location.pathname === "") &&
         showEmailOptions &&
         !showLogoutConfirmModal
       ) {
         // User pressed back button from /email - show confirmation modal
-        // Only show if modal is not already showing (prevents issues with multiple back presses)
         setShowLogoutConfirmModal(true);
-        // Push back to /email to prevent immediate navigation
-        navigate("/email", { replace: true });
+        navigate(ROUTES.EMAIL, { replace: true });
       }
     }
   }, [showEmailOptions, location.pathname, navigate, showLogoutConfirmModal]);
@@ -334,9 +335,8 @@ export const PhoneNumberSignInV3Complete: React.FC<
     setShowLogoutConfirmModal(false);
     setShowEmailOptions(false);
     setShowOtpForm(false);
-    // Matching Angular: sessionStorage.removeItem(AUTHENTICATION_SESSION_STORAGE_KEY);
     removeAuthenticationSession();
-    navigate("/", { replace: true });
+    navigate(ROUTES.ROOT, { replace: true });
   }, [navigate]);
 
   // Handle logout cancel
@@ -647,28 +647,28 @@ export const PhoneNumberSignInV3Complete: React.FC<
 
         // Post consent if needed
         if (consent && !isGpay && response.access_token) {
-          try {
-            const tokenPayload = JSON.parse(
-              atob(response.access_token.split(".")[1]),
-            );
-            const consentObj = {
-              consents: [
-                {
-                  dataSharingConsent: {
-                    isAccepted: true,
-                    source: "signup",
+          const tokenPayload = safeParseAccessToken<{ sub?: string }>(response);
+          if (tokenPayload?.sub) {
+            try {
+              const consentObj = {
+                consents: [
+                  {
+                    dataSharingConsent: {
+                      isAccepted: true,
+                      source: "signup",
+                    },
                   },
-                },
-              ],
-            };
-            await authService.postConsent(
-              environment,
-              tokenPayload.sub,
-              response,
-              consentObj,
-            );
-          } catch (e) {
-            console.error("Error posting consent:", e);
+                ],
+              };
+              await authService.postConsent(
+                environment,
+                tokenPayload.sub,
+                response,
+                consentObj,
+              );
+            } catch {
+              // Consent posting failed - non-critical error
+            }
           }
         }
 
@@ -1080,23 +1080,33 @@ export const PhoneNumberSignInV3Complete: React.FC<
 
       try {
         const response = await window.microapps.getIdentity();
-        const payload = JSON.parse(atob(response.split(".")[1]));
-        const emailToken: any = {};
-        Object.assign(emailToken, payload);
-
-        if (emailToken && emailToken.email_verified && emailToken.email) {
-          if (emailToken.email.length > 1) {
-            setAuthentication((prev) => ({ ...prev, Email: emailToken.email }));
-            setTimeout(() => {
-              if (phoneToken) {
-                getTokenUsingGoogleLogin(phoneToken, response);
-              } else {
-                getTokenUsingAcrValues(true);
-              }
-            }, 0);
+        if (response.status !== "SUCCESS" || !response.gtoken) {
+          if (validateOnlyEmail) {
+            getTokenUsingAcrValues(true);
           }
+          return;
         }
-      } catch (error) {
+
+        const emailToken = safeParseJWT<{
+          email_verified?: boolean;
+          email?: string;
+        }>(response.gtoken);
+
+        if (
+          emailToken?.email_verified &&
+          emailToken.email &&
+          emailToken.email.length > 1
+        ) {
+          setAuthentication((prev) => ({ ...prev, Email: emailToken.email! }));
+          setTimeout(() => {
+            if (phoneToken) {
+              getTokenUsingGoogleLogin(phoneToken, response.gtoken!);
+            } else {
+              getTokenUsingAcrValues(true);
+            }
+          }, 0);
+        }
+      } catch {
         if (validateOnlyEmail) {
           getTokenUsingAcrValues(true);
         }
@@ -1122,7 +1132,7 @@ export const PhoneNumberSignInV3Complete: React.FC<
           finoramicClient: "",
           finoramicClientId: "",
           finoramicDomain: "",
-          finoramicCallback: "/authentication/finoramic-callback",
+          finoramicCallback: ROUTES.FINORAMIC_CALLBACK,
           baseAppUrl: "",
         };
 
