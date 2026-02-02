@@ -43,6 +43,7 @@ import {
   removeAuthenticationSession,
   setAuthenticationSession,
   getAuthenticationSession,
+  setZestToken,
   SESSION_STORAGE_KEYS,
 } from "../../../utils/sessionStorage";
 import { focusElementById, scrollToTop } from "../../../utils/autoFocus";
@@ -587,6 +588,9 @@ export const PhoneNumberSignInV3Complete: React.FC<
           version,
         );
 
+        // Store token on submission when token API succeeds (login screen / OTP, email screen / signup)
+        setZestToken(response as object);
+
         // Track events
         if (otherEmail && trackingService && userDetails) {
           const otherEmailEvent = new EventDetails(
@@ -974,6 +978,9 @@ export const PhoneNumberSignInV3Complete: React.FC<
       try {
         const response =
           await authService.getTokenUsingGoogleLogin(googleAuthPayload);
+
+        // Store token on submission when token API succeeds (login screen - Google)
+        setZestToken(response as object);
 
         const eventName = googlePayRedirection
           ? "OTP_autologin"

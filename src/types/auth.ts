@@ -21,6 +21,11 @@ export interface AuthToken {
   scope: string;
 }
 
+export interface AuthTokenResponse {
+  access_token: string;
+  expires_in: number;
+  token_type: string;
+}
 // Authentication credentials for different auth methods
 export interface AuthCredentials {
   type: 'email' | 'phone' | 'google' | 'truecaller' | 'finoramic';
