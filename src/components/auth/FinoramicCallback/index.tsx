@@ -20,7 +20,8 @@ import {
   getAuthenticationSession,
   removeAuthenticationSession,
   setContactNumber,
-  setSignUpFlag
+  setSignUpFlag,
+  setZestToken,
 } from '../../../utils/sessionStorage';
 
 export interface FinoramicCallbackProps {
@@ -154,6 +155,9 @@ export const FinoramicCallback: React.FC<FinoramicCallbackProps> = ({
         acrValues,
         version
       );
+
+      // Store token on submission when token API succeeds
+      setZestToken(response as object);
 
       const eventName = 'Onboarding_Signup_Done';
       const signupEvent = new EventDetails(eventName, 'Event', 'AuthType', '_null', environment);

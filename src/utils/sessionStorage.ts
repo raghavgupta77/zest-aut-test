@@ -4,8 +4,10 @@
  * Matches Angular's ngx-webstorage patterns exactly
  */
 
+import type { AuthTokenResponse } from '../types/auth';
 import { AUTHENTICATION_SESSION_STORAGE_KEY } from './helpers';
 import type { AuthenticationSessionStorageProperties } from './helpers';
+import { decryptToken, encryptToken } from './tokenEncryption';
 
 /**
  * Session storage keys (matching Angular ngx-webstorage format exactly)
@@ -17,6 +19,7 @@ export const SESSION_STORAGE_KEYS = {
   PARAMS: 'ngx-webstorage|zest-params',
   CHECKOUT_PARAMS: 'ngx-webstorage|zest-checkout-params',
   AUTHENTICATION: AUTHENTICATION_SESSION_STORAGE_KEY, // 'ngx-webstorage|zest-authentication'
+  ZEST: 'ngx-webstorage|zest', // Auth token after login
 } as const;
 
 /**
@@ -140,6 +143,41 @@ export function setCheckoutParams(params: any): void {
     window.sessionStorage.setItem(SESSION_STORAGE_KEYS.CHECKOUT_PARAMS, JSON.stringify(params));
   } catch (e) {
     console.warn('Failed to set checkout params in session storage:', e);
+  }
+}
+
+/**
+ * Set auth token in session storage (after login)
+ * Key: ngx-webstorage|zest - store on submission when token API succeeds (login screen, email screen)
+ */
+export const setZestToken = async (token: object): Promise<void> => {
+  try {
+    window.sessionStorage.setItem(SESSION_STORAGE_KEYS.ZEST, JSON.stringify(token));
+    const tokenObj = token as AuthTokenResponse;
+    console.log('token', token)
+    const tokenURL = `access_token=${tokenObj.access_token}&token_type=${tokenObj.token_type}&expires_in=${tokenObj.expires_in}`
+
+    const encryptedToken = await encryptToken(tokenURL, 'secret');
+    console.log('encryptedToken', encryptedToken);
+    const decryptedToken = await decryptToken(encryptedToken, 'secret');
+    console.log('decryptedToken', decryptedToken);
+
+    window.location.href = `http://localhost:4200/loggedinredirect?token=${encryptedToken}`;
+   
+  } catch (e) {
+    console.warn('Failed to set zest token in session storage:', e);
+  }
+}
+
+/**
+ * Get auth token from session storage
+ */
+export function getZestToken(): string | null {
+  try {
+    return window.sessionStorage.getItem(SESSION_STORAGE_KEYS.ZEST);
+  } catch (e) {
+    console.warn('Failed to get zest token from session storage:', e);
+    return null;
   }
 }
 
