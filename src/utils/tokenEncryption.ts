@@ -6,14 +6,14 @@ const IV_LENGTH = 12;
 const SALT_LENGTH = 16;
 const PBKDF2_ITERATIONS = 100_000;
 
+const SECRET_KEY = import.meta.env.VITE_TOKEN_DECRYPT_SECRET;
 
 export async function encryptToken(
   token: string,
-  secretKey: string
 ): Promise<string> {
   const salt = crypto.getRandomValues(new Uint8Array(SALT_LENGTH));
   const iv = crypto.getRandomValues(new Uint8Array(IV_LENGTH));
-  const key = await deriveKey(secretKey, salt);
+  const key = await deriveKey(SECRET_KEY, salt);
 
   const encoder = new TextEncoder();
   const ciphertext = await crypto.subtle.encrypt(
@@ -63,7 +63,6 @@ async function deriveKey(secret: string, salt: Uint8Array): Promise<CryptoKey> {
 
 export async function decryptToken(
   encryptedValue: string,
-  secretKey: string
 ): Promise<string> {
   const combined = Uint8Array.from(atob(encryptedValue), (c) =>
     c.charCodeAt(0)
@@ -73,7 +72,7 @@ export async function decryptToken(
   const iv = combined.subarray(SALT_LENGTH, SALT_LENGTH + IV_LENGTH);
   const ciphertext = combined.subarray(SALT_LENGTH + IV_LENGTH);
 
-  const key = await deriveKey(secretKey, salt);
+  const key = await deriveKey(SECRET_KEY, salt);
 
   const decrypted = await crypto.subtle.decrypt(
     {
