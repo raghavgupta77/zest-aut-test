@@ -676,10 +676,6 @@ export const PhoneNumberSignInV3Complete: React.FC<
           }
         }
 
-        // Update session storage (matching Angular exactly)
-        // Angular: window.sessionStorage.removeItem(AUTHENTICATION_SESSION_STORAGE_KEY);
-        // Angular: window.sessionStorage.setItem('ngx-webstorage|zest-contact', this.authentication.MobileNumber);
-        // Angular: window.sessionStorage.setItem('ngx-webstorage|zest-sign-up', 'true');
         removeAuthenticationSession();
         setContactNumber(currentAuth.MobileNumber);
         if (isSignup) {
@@ -997,10 +993,7 @@ export const PhoneNumberSignInV3Complete: React.FC<
 
         setToken(response);
 
-        if (external_id_token2) {
-          // Matching Angular exactly:
-          // window.sessionStorage.setItem('ngx-webstorage|zest-sign-up', 'true');
-          // window.sessionStorage.setItem('ngx-webstorage|zest-contact', this.authentication.MobileNumber);
+        if (external_id_token2) {         
           setSignUpFlag(true);
           setContactNumber(authentication.MobileNumber);
         }

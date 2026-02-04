@@ -5,7 +5,7 @@
  */
 
 import type { AuthTokenResponse } from '../types/auth';
-import { AUTHENTICATION_SESSION_STORAGE_KEY } from './helpers';
+import { afterAuthRedirect, AUTHENTICATION_SESSION_STORAGE_KEY } from './helpers';
 import type { AuthenticationSessionStorageProperties } from './helpers';
 import { decryptToken, encryptToken } from './tokenEncryption';
 
@@ -20,6 +20,7 @@ export const SESSION_STORAGE_KEYS = {
   CHECKOUT_PARAMS: 'ngx-webstorage|zest-checkout-params',
   AUTHENTICATION: AUTHENTICATION_SESSION_STORAGE_KEY, // 'ngx-webstorage|zest-authentication'
   ZEST: 'ngx-webstorage|zest', // Auth token after login
+  SOURCE: 'ngx-webstorage|zest-source',
 } as const;
 
 /**
@@ -31,6 +32,17 @@ export function setSignUpFlag(value: boolean = true): void {
     window.sessionStorage.setItem(SESSION_STORAGE_KEYS.SIGN_UP, value.toString());
   } catch (e) {
     console.warn('Failed to set sign-up flag in session storage:', e);
+  }
+}
+
+/**
+ * Set redirected source in session storage
+ */
+export function setRedirectedSource(source: string): void {
+  try {
+    window.sessionStorage.setItem(SESSION_STORAGE_KEYS.SOURCE, source);
+  } catch (e) {
+    console.warn('Failed to set redirected source in session storage:', e);
   }
 }
 
@@ -162,8 +174,10 @@ export const setZestToken = async (token: object): Promise<void> => {
     const decryptedToken = await decryptToken(encryptedToken);
     console.log('decryptedToken', decryptedToken);
 
-    window.location.href = `http://localhost:4200/loggedinredirect?token=${encryptedToken}`;
-   
+    // window.location.href = `http://localhost:4200/loggedinredirect?token=${encryptedToken}`;
+    // window.location.href = `http://localhost:3000/authentication?token=${encryptedToken}`;
+    afterAuthRedirect(encryptedToken);
+
   } catch (e) {
     console.warn('Failed to set zest token in session storage:', e);
   }

@@ -1,4 +1,4 @@
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, useLocation } from "react-router-dom";
 import { ErrorBoundary } from "./components/common/ErrorBoundary";
 import {
   AnalyticsProvider,
@@ -7,6 +7,8 @@ import {
 import { AuthProvider } from "./contexts/AuthContext";
 import { AppRoutes } from "./routes";
 import "./App.css";
+import { useEffect } from "react";
+import { setRedirectedSource } from "./utils/sessionStorage";
 
 const analyticsConfig = {
   webEngageApiKey: import.meta.env.VITE_WEBENGAGE_KEY,
@@ -18,7 +20,17 @@ const analyticsConfig = {
   consentRequired: true,
 };
 
+
 function App() {
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const source = urlParams.get('source');
+    if (source) {
+      console.log('setting redirected source', source);
+      setRedirectedSource(source);
+    }
+  }, [])
   return (
     <ErrorBoundary level="critical" showErrorDetails={import.meta.env.DEV}>
       <AnalyticsProvider

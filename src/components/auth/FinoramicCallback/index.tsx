@@ -207,10 +207,6 @@ export const FinoramicCallback: React.FC<FinoramicCallbackProps> = ({
         { consent: waOpted }
       );
 
-      // Update session storage (matching Angular exactly)
-      // Angular: window.sessionStorage.removeItem(AUTHENTICATION_SESSION_STORAGE_KEY);
-      // Angular: window.sessionStorage.setItem('ngx-webstorage|zest-contact', this.authentication.MobileNumber);
-      // Angular: window.sessionStorage.setItem('ngx-webstorage|zest-sign-up', 'true');
       removeAuthenticationSession();
       setContactNumber(authentication.MobileNumber);
       setSignUpFlag(true);

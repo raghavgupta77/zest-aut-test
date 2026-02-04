@@ -20,7 +20,6 @@ export class TrackingService {
 
   /**
    * Get global params from session storage
-   * Matching Angular: window.sessionStorage.getItem('ngx-webstorage|zest-params');
    */
   getGlobalParamsFromSession(): GlobalParams {
     const params = getParams();
